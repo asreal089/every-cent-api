@@ -16,8 +16,8 @@ public class TipoLancamento {
 	@Column(name = "tipo_nome")
 	private String tipoNome;
 	
-	@Column(name = "tipo_descricao" )
-	private String tipoDescricao;
+	@Column(name = "is_renda" )
+	private Boolean isRenda;
 
 	public Long getId() {
 		return id;
@@ -35,11 +35,15 @@ public class TipoLancamento {
 		this.tipoNome = tipoNome;
 	}
 
-	public String getTipoDescricao() {
-		return tipoDescricao;
+	public Boolean getIsRenda() {
+		return isRenda;
 	}
 
-	public void setTipoDescricao(String tipoDescricao) {
-		this.tipoDescricao = tipoDescricao;
+	public void setIsRenda(Boolean isRenda) {
+		this.isRenda = isRenda;
 	}
+
+	
+
+	
 }
