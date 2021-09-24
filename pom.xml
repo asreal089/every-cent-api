@@ -8,11 +8,11 @@
 		<version>2.5.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>every-cent</groupId>
-	<artifactId>everycent</artifactId>
+	<groupId>com</groupId>
+	<artifactId>ever.cent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>everycent</name>
-	<description>projeto de controle de gasto</description>
+	<name>ever.cent</name>
+	<description>API para controler de gastos</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -41,7 +41,6 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
