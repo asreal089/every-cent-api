@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,6 +13,7 @@ import lombok.Data;
 @Builder
 @Data
 @Table(name="tipo_lancamento")
+@AllArgsConstructor
 public class TipoLancamento {
 	@Id
 	@Column(name="tipo_id")
