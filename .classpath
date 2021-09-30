@@ -1,28 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" output="target/classes" path="src/main/java">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
+	<classpathentry excluding="**/*.java|**/application*.yml|**/application*.yaml|**/application*.properties" kind="src" path="src/main/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-data-jpa/2.5.5/spring-boot-starter-data-jpa-2.5.5.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-starter-data-jpa/2.5.5/spring-boot-starter-data-jpa-2.5.5-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-aop/2.5.5/spring-boot-starter-aop-2.5.5.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-starter-aop/2.5.5/spring-boot-starter-aop-2.5.5-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter/2.5.5/spring-boot-starter-2.5.5.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-starter/2.5.5/spring-boot-starter-2.5.5-sources.jar"/>
@@ -105,6 +86,19 @@
 	<classpathentry kind="var" path="M2_REPO/org/flywaydb/flyway-core/7.7.3/flyway-core-7.7.3.jar" sourcepath="M2_REPO/org/flywaydb/flyway-core/7.7.3/flyway-core-7.7.3-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-devtools/2.5.5/spring-boot-devtools-2.5.5.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-devtools/2.5.5/spring-boot-devtools-2.5.5-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar" sourcepath="M2_REPO/org/projectlombok/lombok/1.18.20/lombok-1.18.20-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springdoc/springdoc-openapi-ui/1.5.10/springdoc-openapi-ui-1.5.10.jar" sourcepath="M2_REPO/org/springdoc/springdoc-openapi-ui/1.5.10/springdoc-openapi-ui-1.5.10-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springdoc/springdoc-openapi-webmvc-core/1.5.10/springdoc-openapi-webmvc-core-1.5.10.jar" sourcepath="M2_REPO/org/springdoc/springdoc-openapi-webmvc-core/1.5.10/springdoc-openapi-webmvc-core-1.5.10-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springdoc/springdoc-openapi-common/1.5.10/springdoc-openapi-common-1.5.10.jar" sourcepath="M2_REPO/org/springdoc/springdoc-openapi-common/1.5.10/springdoc-openapi-common-1.5.10-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/io/swagger/core/v3/swagger-models/2.1.10/swagger-models-2.1.10.jar" sourcepath="M2_REPO/io/swagger/core/v3/swagger-models/2.1.10/swagger-models-2.1.10-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/io/swagger/core/v3/swagger-annotations/2.1.10/swagger-annotations-2.1.10.jar" sourcepath="M2_REPO/io/swagger/core/v3/swagger-annotations/2.1.10/swagger-annotations-2.1.10-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/io/swagger/core/v3/swagger-integration/2.1.10/swagger-integration-2.1.10.jar" sourcepath="M2_REPO/io/swagger/core/v3/swagger-integration/2.1.10/swagger-integration-2.1.10-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/io/swagger/core/v3/swagger-core/2.1.10/swagger-core-2.1.10.jar" sourcepath="M2_REPO/io/swagger/core/v3/swagger-core/2.1.10/swagger-core-2.1.10-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar" sourcepath="M2_REPO/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.12.5/jackson-dataformat-yaml-2.12.5.jar" sourcepath="M2_REPO/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.12.5/jackson-dataformat-yaml-2.12.5-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/jakarta/validation/jakarta.validation-api/2.0.2/jakarta.validation-api-2.0.2.jar" sourcepath="M2_REPO/jakarta/validation/jakarta.validation-api/2.0.2/jakarta.validation-api-2.0.2-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/io/github/classgraph/classgraph/4.8.69/classgraph-4.8.69.jar" sourcepath="M2_REPO/io/github/classgraph/classgraph/4.8.69/classgraph-4.8.69-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/webjars/swagger-ui/3.51.1/swagger-ui-3.51.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/webjars/webjars-locator-core/0.46/webjars-locator-core-0.46.jar" sourcepath="M2_REPO/org/webjars/webjars-locator-core/0.46/webjars-locator-core-0.46-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-test/2.5.5/spring-boot-starter-test-2.5.5.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-starter-test/2.5.5/spring-boot-starter-test-2.5.5-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-test/2.5.5/spring-boot-test-2.5.5.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-test/2.5.5/spring-boot-test-2.5.5-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-test-autoconfigure/2.5.5/spring-boot-test-autoconfigure-2.5.5.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-test-autoconfigure/2.5.5/spring-boot-test-autoconfigure-2.5.5-sources.jar"/>
@@ -130,26 +124,9 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-test/5.5.2/spring-security-test-5.5.2.jar" sourcepath="M2_REPO/org/springframework/security/spring-security-test/5.5.2/spring-security-test-5.5.2-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/postgresql/postgresql/42.2.23/postgresql-42.2.23.jar" sourcepath="M2_REPO/org/postgresql/postgresql/42.2.23/postgresql-42.2.23-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/checkerframework/checker-qual/3.5.0/checker-qual-3.5.0.jar" sourcepath="M2_REPO/org/checkerframework/checker-qual/3.5.0/checker-qual-3.5.0-sources.jar"/>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="src" path="target/generated-sources/annotations">
 		<attributes>
 			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="ignore_optional_problems" value="true"/>
-			<attribute name="m2e-apt" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="ignore_optional_problems" value="true"/>
-			<attribute name="m2e-apt" value="true"/>
-			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>

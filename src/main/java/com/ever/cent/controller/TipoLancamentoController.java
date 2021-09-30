@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ever.cent.model.TipoLancamento;
+import com.ever.cent.domain.model.TipoLancamento;
 import com.ever.cent.repository.TipoLancamentoRepository;
 
 @RestController

@@ -1,4 +1,4 @@
-package com.ever.cent.model;
+package com.ever.cent.domain.model;
 
 import java.io.Serializable;
 import java.util.Set;
