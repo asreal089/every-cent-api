@@ -1,4 +1,4 @@
-package com.ever.cent.domain.dto;
+package com.ever.cent.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import com.ever.cent.domain.dto.LocalUser;
+import com.ever.cent.domain.dto.SocialProvider;
+import com.ever.cent.domain.dto.UserInfo;
 import com.ever.cent.domain.model.Role;
 import com.ever.cent.domain.model.User;
 

@@ -24,10 +24,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
  
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
  
     /**

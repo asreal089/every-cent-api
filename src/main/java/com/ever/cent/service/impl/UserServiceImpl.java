@@ -5,25 +5,32 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
-
+ 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
-import com.ever.cent.domain.dto.GeneralUtils;
 import com.ever.cent.domain.dto.LocalUser;
 import com.ever.cent.domain.dto.SignUpRequest;
-import com.ever.cent.domain.dto.SocialProvider;
 import com.ever.cent.domain.model.Role;
 import com.ever.cent.domain.model.User;
 import com.ever.cent.exception.UserAlreadyExistAuthenticationException;
 import com.ever.cent.repository.RoleRepository;
 import com.ever.cent.repository.UserRepository;
+import com.ever.cent.security.oauth2.user.OAuth2UserInfo;
 import com.ever.cent.service.UserService;
+import com.ever.cent.utils.GeneralUtils;
+ 
 
+ 
+/**
+ * @author Chinna
+ * @since 26/3/18
+ */
 @Service
 public class UserServiceImpl implements UserService {
  
@@ -110,6 +117,4 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findUserById(Long id) {
         return userRepository.findById(id);
     }
-
-	
 }
