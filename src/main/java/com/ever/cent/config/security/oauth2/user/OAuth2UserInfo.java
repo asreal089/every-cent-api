@@ -1,4 +1,4 @@
-package com.ever.cent.security.oauth2.user;
+package com.ever.cent.config.security.oauth2.user;
 
 import java.util.Map;
 

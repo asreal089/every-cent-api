@@ -5,23 +5,26 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
- 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
+import com.ever.cent.config.security.oauth2.user.OAuth2UserInfo;
+import com.ever.cent.config.security.oauth2.user.OAuth2UserInfoFactory;
 import com.ever.cent.domain.dto.LocalUser;
 import com.ever.cent.domain.dto.SignUpRequest;
+import com.ever.cent.domain.dto.SocialProvider;
 import com.ever.cent.domain.model.Role;
 import com.ever.cent.domain.model.User;
+import com.ever.cent.exception.OAuth2AuthenticationProcessingException;
 import com.ever.cent.exception.UserAlreadyExistAuthenticationException;
 import com.ever.cent.repository.RoleRepository;
 import com.ever.cent.repository.UserRepository;
-import com.ever.cent.security.oauth2.user.OAuth2UserInfo;
 import com.ever.cent.service.UserService;
 import com.ever.cent.utils.GeneralUtils;
  
@@ -83,9 +86,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public LocalUser processUserRegistration(String registrationId, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo) {
         OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId, attributes);
-        if (StringUtils.isEmpty(oAuth2UserInfo.getName())) {
+        if (ObjectUtils.isEmpty(oAuth2UserInfo.getName())) {
             throw new OAuth2AuthenticationProcessingException("Name not found from OAuth2 provider");
-        } else if (StringUtils.isEmpty(oAuth2UserInfo.getEmail())) {
+        } else if (ObjectUtils.isEmpty(oAuth2UserInfo.getEmail())) {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
         SignUpRequest userDetails = toUserRegistrationObject(registrationId, oAuth2UserInfo);
