@@ -7,10 +7,6 @@ import com.ever.cent.validation.PasswordValidation;
 
 import lombok.Data;
  
-/**
- * @author Chinna
- * @since 26/3/18
- */
 @Data
 @PasswordValidation
 public class SignUpRequest {
