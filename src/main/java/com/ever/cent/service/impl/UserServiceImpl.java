@@ -27,13 +27,7 @@ import com.ever.cent.repository.RoleRepository;
 import com.ever.cent.repository.UserRepository;
 import com.ever.cent.service.UserService;
 import com.ever.cent.utils.GeneralUtils;
- 
 
- 
-/**
- * @author Chinna
- * @since 26/3/18
- */
 @Service
 public class UserServiceImpl implements UserService {
  

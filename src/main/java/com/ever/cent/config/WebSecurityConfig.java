@@ -1,12 +1,7 @@
 package com.ever.cent.config;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
 import java.util.Arrays;
- 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +24,14 @@ import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorH
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.client.RestTemplate;
+
+import com.ever.cent.config.security.jwt.TokenAuthenticationFilter;
+import com.ever.cent.config.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
+import com.ever.cent.config.security.oauth2.OAuth2AccessTokenResponseConverterWithDefaults;
+import com.ever.cent.config.security.oauth2.user.CustomOAuth2UserService;
+import com.ever.cent.config.security.oauth2.user.CustomOidcUserService;
+import com.ever.cent.config.security.oauth2.user.OAuth2AuthenticationFailureHandler;
+import com.ever.cent.config.security.oauth2.user.OAuth2AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
