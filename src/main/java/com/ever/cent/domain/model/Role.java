@@ -20,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "role")
+@Table(name = "role", schema="public")
 public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String USER = "USER";

@@ -2,7 +2,7 @@ package com.ever.cent.domain.dto;
 
 public enum SocialProvider {
 
-	GOOGLE("google"), LOCAL("LOCAL");
+	LOCAL("LOCAL"), GOOGLE("google");
 	 
     private String providerType;
  
