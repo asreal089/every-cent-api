@@ -22,9 +22,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="lancamento", schema = "public")
-public class Lancamento {
-
+@Table(name="orcamento", schema = "public")
+public class Orcamento {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lancamento_id")
@@ -38,10 +37,6 @@ public class Lancamento {
 	@JoinColumn(name="tipo_id")
     private TipoLancamento tipoLancamento;
 	
-	private String descricao;
-	
+	@Column(name="valor_limite")
 	private DecimalFormat valor;
-	
-	@Column(name= "data_lancamento")
-	private Date dataLancamento;
 }
