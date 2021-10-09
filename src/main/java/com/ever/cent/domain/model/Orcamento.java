@@ -1,7 +1,5 @@
 package com.ever.cent.domain.model;
 
-import java.text.DecimalFormat;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +14,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
+
+
 @Entity
 @Getter
 @Setter
@@ -25,17 +27,17 @@ import lombok.Setter;
 public class Orcamento {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "lancamento_id")
-	private Long id;
+    @Column(name = "orcamento_id")
+	public Long id;
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
-    private User user;
+    public User user;
 	
 	@ManyToOne
 	@JoinColumn(name="tipo_id")
-    private TipoLancamento tipoLancamento;
+    public TipoLancamento tipoLancamento;
 	
 	@Column(name="valor_limite")
-	private DecimalFormat valor;
+	public BigDecimal valor;
 }
