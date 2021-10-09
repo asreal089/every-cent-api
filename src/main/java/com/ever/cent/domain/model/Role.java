@@ -35,7 +35,6 @@ public class Role implements Serializable {
  
     private String name;
  
-    // bi-directional many-to-many association to User
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
  
