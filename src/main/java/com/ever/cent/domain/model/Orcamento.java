@@ -1,7 +1,6 @@
 package com.ever.cent.domain.model;
 
 import java.text.DecimalFormat;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
