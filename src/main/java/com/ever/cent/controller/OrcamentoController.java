@@ -32,14 +32,15 @@ public class OrcamentoController {
 	private TipoLancamentoRepository tipoRepo;
 
 	@GetMapping("/{userID}")
-	public List<Orcamento> getOrcamentoByUserId(@PathVariable(value = "userID") Long userID) {
-		return orcamentoRepo.findByUser(userID);
+	public List<Orcamento> getOrcamentoByUserId(@PathVariable(value = "userID") String userID) {
+		return orcamentoRepo.findByUserId(Long.valueOf(userID));
 	}
 
 	@PostMapping("/{userID}/{tipoID}")
-	public Orcamento postOrcamento(@PathVariable(value = "userID") String userID, @PathVariable(value = "tipoID") String tipoID, @RequestBody Orcamento orcamento) {
+	public Orcamento postOrcamento(@PathVariable(value = "userID") String userID,
+			@PathVariable(value = "tipoID") String tipoID, @RequestBody Orcamento orcamento) {
 		Optional<User> usuario = userRepo.findById(Long.valueOf(userID));
-		Optional<TipoLancamento> tipo= tipoRepo.findById(Integer.valueOf(tipoID));
+		Optional<TipoLancamento> tipo = tipoRepo.findById(Integer.valueOf(tipoID));
 		orcamento.setUser(usuario.get());
 		orcamento.setTipoLancamento(tipo.get());
 		Orcamento savedEntity = orcamentoRepo.save(orcamento);
