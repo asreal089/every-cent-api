@@ -1,7 +1,6 @@
 package com.ever.cent.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ever.cent.domain.dto.orcamento.OrcamentoRequestDTO;
+import com.ever.cent.domain.dto.orcamento.OrcamentoResponseDTO;
 import com.ever.cent.domain.model.Orcamento;
-import com.ever.cent.domain.model.TipoLancamento;
-import com.ever.cent.domain.model.User;
 import com.ever.cent.repository.OrcamentoRepository;
-import com.ever.cent.repository.TipoLancamentoRepository;
-import com.ever.cent.repository.UserRepository;
+import com.ever.cent.service.impl.OrcamentoServiceImpl;
 
 @RestController
 @RequestMapping("api/orcamento")
@@ -26,24 +24,18 @@ public class OrcamentoController {
 	private OrcamentoRepository orcamentoRepo;
 
 	@Autowired
-	private UserRepository userRepo;
-
-	@Autowired
-	private TipoLancamentoRepository tipoRepo;
-
+	private OrcamentoServiceImpl orcamentoService;
+	
 	@GetMapping("/{userID}")
 	public List<Orcamento> getOrcamentoByUserId(@PathVariable(value = "userID") String userID) {
 		return orcamentoRepo.findByUserId(Long.valueOf(userID));
 	}
 
-	@PostMapping("/{userID}/{tipoID}")
-	public Orcamento postOrcamento(@PathVariable(value = "userID") String userID,
-			@PathVariable(value = "tipoID") String tipoID, @RequestBody Orcamento orcamento) {
-		Optional<User> usuario = userRepo.findById(Long.valueOf(userID));
-		Optional<TipoLancamento> tipo = tipoRepo.findById(Integer.valueOf(tipoID));
-		orcamento.setUser(usuario.get());
-		orcamento.setTipoLancamento(tipo.get());
-		Orcamento savedEntity = orcamentoRepo.save(orcamento);
-		return savedEntity;
+	@PostMapping("/{userID}")
+	public OrcamentoResponseDTO postOrcamento(@PathVariable(value = "userID") String userID, @RequestBody OrcamentoRequestDTO orcamento) {
+		OrcamentoResponseDTO response = orcamentoService.novoOrcamento(Long.valueOf(userID), orcamento);
+		return response;
 	}
+
+
 }
