@@ -14,7 +14,7 @@ public class TipoLancamentoController {
 	
 	@Autowired
 	public TipoLancamentoRepository repository;
-	@GetMapping("/tipo-lancamento")
+	@GetMapping("/api/tipo-lancamento")
 	public List<TipoLancamento> getLancamento() {
 		return repository.findAll();
 	}
