@@ -12,23 +12,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ever.cent.domain.dto.orcamento.OrcamentoRequestDTO;
 import com.ever.cent.domain.dto.orcamento.OrcamentoResponseDTO;
-import com.ever.cent.domain.model.Orcamento;
-import com.ever.cent.repository.OrcamentoRepository;
 import com.ever.cent.service.impl.OrcamentoServiceImpl;
 
 @RestController
 @RequestMapping("api/orcamento")
-public class OrcamentoController {
-
-	@Autowired
-	private OrcamentoRepository orcamentoRepo;
+public class OrcamentoController {	
 
 	@Autowired
 	private OrcamentoServiceImpl orcamentoService;
 	
 	@GetMapping("/{userID}")
-	public List<Orcamento> getOrcamentoByUserId(@PathVariable(value = "userID") String userID) {
-		return orcamentoRepo.findByUserId(Long.valueOf(userID));
+	public List<OrcamentoResponseDTO> getOrcamentoByUserId(@PathVariable(value = "userID") String userID) {
+		return orcamentoService.getOrcamentosByUserId(Long.valueOf(userID));
 	}
 
 	@PostMapping("/{userID}")

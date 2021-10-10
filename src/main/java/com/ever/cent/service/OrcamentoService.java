@@ -9,7 +9,7 @@ public interface OrcamentoService {
 	
 	public OrcamentoResponseDTO novoOrcamento(Long userID,OrcamentoRequestDTO orcamento);
 	
-	public List<OrcamentoResponseDTO> getOrcamentosByUserId();
+	public List<OrcamentoResponseDTO> getOrcamentosByUserId(Long userID);
 	
 
 }

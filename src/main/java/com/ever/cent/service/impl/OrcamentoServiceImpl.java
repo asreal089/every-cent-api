@@ -1,5 +1,6 @@
 package com.ever.cent.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,15 +36,24 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		Orcamento novoOrcamento = Orcamento.builder().user(usuario.get()).tipoLancamento(tipo.get())
 				.valor(orcamento.getValor()).build();
 		Orcamento savedEntity = orcamentoRepo.save(novoOrcamento);
-		OrcamentoResponseDTO response = OrcamentoResponseDTO.builder().id(savedEntity.getId())
-				.tipo_id(savedEntity.getTipoLancamento().id).is_renda(savedEntity.getTipoLancamento().isRenda)
-				.valor(savedEntity.getValor()).tipo(savedEntity.getTipoLancamento().tipo).build();
+		OrcamentoResponseDTO response = convertToOrcamentoResponseDTO(savedEntity);
 		return response;
 	}
 
 	@Override
-	public List<OrcamentoResponseDTO> getOrcamentosByUserId() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OrcamentoResponseDTO> getOrcamentosByUserId(Long userID) {
+		List<Orcamento> orcamentos = orcamentoRepo.findByUserId(userID);
+		List<OrcamentoResponseDTO> response = new ArrayList<>();
+		for (Orcamento orcamento : orcamentos) {
+			response.add(convertToOrcamentoResponseDTO(orcamento));
+		}
+		return response;
+	}
+
+	private OrcamentoResponseDTO convertToOrcamentoResponseDTO(Orcamento savedEntity) {
+		OrcamentoResponseDTO response = OrcamentoResponseDTO.builder().id(savedEntity.getId())
+				.tipo_id(savedEntity.getTipoLancamento().id).is_renda(savedEntity.getTipoLancamento().isRenda)
+				.valor(savedEntity.getValor()).tipo(savedEntity.getTipoLancamento().tipo).build();
+		return response;
 	}
 }
