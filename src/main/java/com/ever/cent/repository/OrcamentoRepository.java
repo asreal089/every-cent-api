@@ -9,6 +9,11 @@ import com.ever.cent.domain.model.Orcamento;
 
 @Repository
 public interface OrcamentoRepository extends JpaRepository<Orcamento, Long>  {
+	
 	List<Orcamento> findByUserId(Long user_id);
+	
 	Orcamento findByUserIdAndTipoLancamento_Id(Long user_id, Integer tipo_id);
+	
+	void deleteById(Long orcamento_id);
+	
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ever.cent.domain.dto.orcamento.OrcamentoRequestDTO;
@@ -61,5 +63,17 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		Orcamento orcamento = orcamentoRepo.findByUserIdAndTipoLancamento_Id(user_id, tipo_id);
 		OrcamentoResponseDTO response = convertToOrcamentoResponseDTO(orcamento);
 		return response;
+	}
+
+	public ResponseEntity<String> delete(Long userID, Long orcamentoID) {
+		Optional<Orcamento> orcamento = orcamentoRepo.findById(orcamentoID);
+		if(orcamento.isPresent()){			
+			if(orcamento.get().getUser().getId()== userID) {			
+				orcamentoRepo.deleteById(orcamentoID);
+				return new ResponseEntity<String>(HttpStatus.OK);
+			}
+			return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 	}
 }
