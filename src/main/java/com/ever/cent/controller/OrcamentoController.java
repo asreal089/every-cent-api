@@ -16,21 +16,27 @@ import com.ever.cent.service.impl.OrcamentoServiceImpl;
 
 @RestController
 @RequestMapping("api/orcamento")
-public class OrcamentoController {	
+public class OrcamentoController {
 
 	@Autowired
 	private OrcamentoServiceImpl orcamentoService;
-	
+
 	@GetMapping("/{userID}")
 	public List<OrcamentoResponseDTO> getOrcamentoByUserId(@PathVariable(value = "userID") String userID) {
 		return orcamentoService.getOrcamentosByUserId(Long.valueOf(userID));
 	}
 
+	@GetMapping("/{userID}/{tipoID}")
+	public OrcamentoResponseDTO getOrcamentoByUserId(@PathVariable(value = "userID") String userID,
+			@PathVariable(value = "tipoID") String tipoID) {
+		return orcamentoService.getOrcamentosByUserIdAndTipoID(Long.valueOf(userID), Integer.valueOf(tipoID));
+	}
+
 	@PostMapping("/{userID}")
-	public OrcamentoResponseDTO postOrcamento(@PathVariable(value = "userID") String userID, @RequestBody OrcamentoRequestDTO orcamento) {
+	public OrcamentoResponseDTO postOrcamento(@PathVariable(value = "userID") String userID,
+			@RequestBody OrcamentoRequestDTO orcamento) {
 		OrcamentoResponseDTO response = orcamentoService.novoOrcamento(Long.valueOf(userID), orcamento);
 		return response;
 	}
-
 
 }

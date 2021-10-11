@@ -56,4 +56,10 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 				.valor(savedEntity.getValor()).tipo(savedEntity.getTipoLancamento().tipo).build();
 		return response;
 	}
+
+	public OrcamentoResponseDTO getOrcamentosByUserIdAndTipoID(Long user_id, Integer tipo_id) {
+		Orcamento orcamento = orcamentoRepo.findByUserIdAndTipoLancamento_Id(user_id, tipo_id);
+		OrcamentoResponseDTO response = convertToOrcamentoResponseDTO(orcamento);
+		return response;
+	}
 }
