@@ -76,4 +76,19 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		}
 		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 	}
+	
+	public ResponseEntity<String> patch(Long userID, Long orcamentoID, OrcamentoRequestDTO orcamentoAtualizado) {
+		Optional<Orcamento> orcamento = orcamentoRepo.findById(orcamentoID);
+		Optional<TipoLancamento> tipo = tipoRepo.findById(orcamentoAtualizado.getTipo_id());
+		if(orcamento.isPresent()&& tipo.isPresent()){			
+			if(orcamento.get().getUser().getId()== userID) {
+				orcamento.get().setTipoLancamento(tipo.get());
+				orcamento.get().setValor(orcamentoAtualizado.getValor());
+				orcamentoRepo.save(orcamento.get());
+				return new ResponseEntity<String>(HttpStatus.OK);
+			}
+			return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+	}
 }
