@@ -29,10 +29,10 @@ public class OrcamentoController {
 		return orcamentoService.getOrcamentosByUserId(Long.valueOf(userID));
 	}
 
-	@GetMapping("/{userID}/{tipoID}")
-	public OrcamentoResponseDTO getOrcamentoByUserId(@PathVariable(value = "userID") String userID,
-			@PathVariable(value = "tipoID") String tipoID) {
-		return orcamentoService.getOrcamentosByUserIdAndTipoID(Long.valueOf(userID), Integer.valueOf(tipoID));
+	@GetMapping("/{userID}/{orcamentoID}")
+	public ResponseEntity<OrcamentoResponseDTO> getOrcamentoByUserId(@PathVariable(value = "userID") String userID,
+			@PathVariable(value = "orcamentoID") String orcamentoID) {
+		return orcamentoService.getOrcamentoById(Long.valueOf(userID), Long.valueOf(orcamentoID));
 	}
 
 	@PostMapping("/{userID}")

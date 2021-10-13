@@ -51,6 +51,21 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		}
 		return response;
 	}
+	
+	public ResponseEntity<OrcamentoResponseDTO> getOrcamentoById(Long userID, Long orcamentoID) {
+		Optional<Orcamento> orcamento = orcamentoRepo.findById(orcamentoID);
+		if(orcamento.isPresent()) {
+			if(!(orcamento.get().user == null)) {				
+				if(orcamento.get().user.getId() == userID) {
+					OrcamentoResponseDTO response = convertToOrcamentoResponseDTO(orcamento.get());
+					return new ResponseEntity<OrcamentoResponseDTO>(response, HttpStatus.OK);
+				}
+			}
+			return new ResponseEntity<OrcamentoResponseDTO>(OrcamentoResponseDTO.builder().build(), HttpStatus.FORBIDDEN);
+		}
+
+		return new ResponseEntity<OrcamentoResponseDTO>(OrcamentoResponseDTO.builder().build(), HttpStatus.NOT_FOUND);
+	}
 
 	private OrcamentoResponseDTO convertToOrcamentoResponseDTO(Orcamento savedEntity) {
 		OrcamentoResponseDTO response = OrcamentoResponseDTO.builder().id(savedEntity.getId())
