@@ -36,10 +36,9 @@ public class OrcamentoController {
 	}
 
 	@PostMapping("/{userID}")
-	public OrcamentoResponseDTO postOrcamento(@PathVariable(value = "userID") String userID,
+	public ResponseEntity<String> postOrcamento(@PathVariable(value = "userID") String userID,
 			@RequestBody OrcamentoRequestDTO orcamento) {
-		OrcamentoResponseDTO response = orcamentoService.novoOrcamento(Long.valueOf(userID), orcamento);
-		return response;
+		return orcamentoService.novoOrcamento(Long.valueOf(userID), orcamento);
 	}
 	
 	@DeleteMapping("/{userID}/{orcamentoID}")

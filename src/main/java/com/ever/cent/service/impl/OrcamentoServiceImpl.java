@@ -32,14 +32,17 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 	private TipoLancamentoRepository tipoRepo;
 
 	@Override
-	public OrcamentoResponseDTO novoOrcamento(Long userID, OrcamentoRequestDTO orcamento) {
+	public ResponseEntity<String> novoOrcamento(Long userID, OrcamentoRequestDTO orcamento) {
 		Optional<User> usuario = userRepo.findById(Long.valueOf(userID));
 		Optional<TipoLancamento> tipo = tipoRepo.findById(Integer.valueOf(orcamento.getTipo_id()));
+		Optional<Orcamento> entidadeExistente =  getOrcamentosByUserIdAndTipoID(userID, orcamento.getTipo_id());
+		if(entidadeExistente.isPresent()) {
+			return patch(userID, entidadeExistente.get().getId(), orcamento);
+		}
 		Orcamento novoOrcamento = Orcamento.builder().user(usuario.get()).tipoLancamento(tipo.get())
 				.valor(orcamento.getValor()).build();
-		Orcamento savedEntity = orcamentoRepo.save(novoOrcamento);
-		OrcamentoResponseDTO response = convertToOrcamentoResponseDTO(savedEntity);
-		return response;
+		orcamentoRepo.save(novoOrcamento);
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	@Override
@@ -74,10 +77,9 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		return response;
 	}
 
-	public OrcamentoResponseDTO getOrcamentosByUserIdAndTipoID(Long user_id, Integer tipo_id) {
-		Orcamento orcamento = orcamentoRepo.findByUserIdAndTipoLancamento_Id(user_id, tipo_id);
-		OrcamentoResponseDTO response = convertToOrcamentoResponseDTO(orcamento);
-		return response;
+	public Optional<Orcamento> getOrcamentosByUserIdAndTipoID(Long user_id, Integer tipo_id) {
+		Optional<Orcamento> orcamento = orcamentoRepo.findByUserIdAndTipoLancamento_Id(user_id, tipo_id);
+		return orcamento;
 	}
 
 	public ResponseEntity<String> delete(Long userID, Long orcamentoID) {
@@ -95,8 +97,12 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 	public ResponseEntity<String> patch(Long userID, Long orcamentoID, OrcamentoRequestDTO orcamentoAtualizado) {
 		Optional<Orcamento> orcamento = orcamentoRepo.findById(orcamentoID);
 		Optional<TipoLancamento> tipo = tipoRepo.findById(orcamentoAtualizado.getTipo_id());
-		if(orcamento.isPresent()&& tipo.isPresent()){			
+		if(orcamento.isPresent()&& tipo.isPresent()){
+			Optional<Orcamento>orcamentoSemelhante = getOrcamentosByUserIdAndTipoID(userID, orcamentoAtualizado.getTipo_id());
 			if(orcamento.get().getUser().getId()== userID) {
+				if(orcamentoSemelhante.isPresent()) {
+					delete(userID, orcamentoSemelhante.get().getId());
+				}
 				orcamento.get().setTipoLancamento(tipo.get());
 				orcamento.get().setValor(orcamentoAtualizado.getValor());
 				orcamentoRepo.save(orcamento.get());
