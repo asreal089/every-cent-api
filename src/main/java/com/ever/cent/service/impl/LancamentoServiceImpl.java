@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ever.cent.domain.dto.lacamento.LancamentoRequestDTO;
 import com.ever.cent.domain.dto.lacamento.LancamentosResponseDTO;
@@ -16,6 +17,7 @@ import com.ever.cent.repository.TipoLancamentoRepository;
 import com.ever.cent.repository.UserRepository;
 import com.ever.cent.service.LancamentoService;
 
+@Service
 public class LancamentoServiceImpl implements LancamentoService {
 
 	@Autowired

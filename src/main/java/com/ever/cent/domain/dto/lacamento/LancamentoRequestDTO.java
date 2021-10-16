@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 public class LancamentoRequestDTO {
 	public Long lacamentoID;
 	public Integer tipoID;
-	public String tipo;
 	public String descricao;
 	public BigDecimal valor;
 	public Date data_lacamento;
