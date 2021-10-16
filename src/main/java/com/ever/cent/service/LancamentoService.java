@@ -9,9 +9,12 @@ public interface LancamentoService {
 	
 	public List<LancamentosResponseDTO> getLacamentos(Long userID);
 	
-	public LancamentosResponseDTO getLancamentoByID(Long orcamentoID);
+	public LancamentosResponseDTO getLancamentoByID(Long userID, Long lancamentoID);
 	
-	public LancamentosResponseDTO saveNovoLancamento(LancamentoRequestDTO orcamento);
+	public LancamentosResponseDTO saveNovoLancamento(Long userID, LancamentoRequestDTO lancamento);
 	
+	public boolean deleteLancamentoByID(Long userID, Long lacamentoID);
+	
+	public LancamentosResponseDTO updateLancamento(Long userID, LancamentoRequestDTO lancamento);
 
 }

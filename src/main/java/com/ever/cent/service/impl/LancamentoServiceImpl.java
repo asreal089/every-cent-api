@@ -15,15 +15,29 @@ public class LancamentoServiceImpl implements LancamentoService{
 	}
 
 	@Override
-	public LancamentosResponseDTO getLancamentoByID(Long orcamentoID) {
+	public LancamentosResponseDTO getLancamentoByID(Long userID, Long lancamentoID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public LancamentosResponseDTO saveNovoLancamento(LancamentoRequestDTO orcamento) {
+	public LancamentosResponseDTO saveNovoLancamento(Long userID, LancamentoRequestDTO lancamento) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public boolean deleteLancamentoByID(Long userID, Long lacamentoID) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public LancamentosResponseDTO updateLancamento(Long userID, LancamentoRequestDTO lancamento) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }
