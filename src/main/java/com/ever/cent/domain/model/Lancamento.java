@@ -1,6 +1,6 @@
 package com.ever.cent.domain.model;
 
-import java.text.DecimalFormat;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +23,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name="lancamento", schema = "public")
 public class Lancamento {
 
@@ -40,7 +42,7 @@ public class Lancamento {
 	
 	private String descricao;
 	
-	private DecimalFormat valor;
+	private BigDecimal valor;
 	
 	@Column(name= "data_lancamento")
 	private Date dataLancamento;
