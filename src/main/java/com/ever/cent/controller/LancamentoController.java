@@ -49,8 +49,8 @@ public class LancamentoController {
 	
 	@PatchMapping("/{userID}/{lancamentoID}")
 	public LancamentosResponseDTO patchLancamento(@PathVariable(value = "userID") String userID,
-			@PathVariable(value = "lancamentoID") String lancamentoID, @RequestBody LancamentoRequestDTO lancamente ) {
-		LancamentosResponseDTO response = service.updateLancamento(Long.valueOf(userID), lancamente);
+			@PathVariable(value = "lancamentoID") String lancamentoID, @RequestBody LancamentoRequestDTO lancamento ) {
+		LancamentosResponseDTO response = service.updateLancamento(Long.valueOf(userID), lancamento);
 		return response;
 	}
 }

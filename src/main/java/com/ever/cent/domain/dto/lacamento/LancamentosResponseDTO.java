@@ -17,6 +17,7 @@ public class LancamentosResponseDTO {
 	public Long lacamentoID;
 	public Integer tipoID;
 	public String tipo;
+	public boolean isRenda;
 	public String descricao;
 	public BigDecimal valor;
 	public Date data_lacamento;

@@ -55,8 +55,8 @@ public class LancamentoServiceImpl implements LancamentoService {
 		Lancamento lancamentoEntidade = Lancamento.builder().user(user).tipoLancamento(tipo)
 				.dataLancamento(lancamento.getData_lacamento()).descricao(lancamento.getDescricao())
 				.valor(lancamento.getValor()).build();
-		
-		Lancamento entidadeSalva =  repo.save(lancamentoEntidade);
+
+		Lancamento entidadeSalva = repo.save(lancamentoEntidade);
 
 		return converLancamentoToResponseDTO(entidadeSalva);
 	}
@@ -75,7 +75,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 		TipoLancamento tipo = tipoRepo.findById(lancamento.getTipoID()).get();
 		entidade.setTipoLancamento(tipo);
 		entidade.setValor(lancamento.getValor());
-		
+
 		return converLancamentoToResponseDTO(repo.save(entidade));
 	}
 
@@ -83,7 +83,8 @@ public class LancamentoServiceImpl implements LancamentoService {
 		return LancamentosResponseDTO.builder().userID(lancamento.getUser().getId())
 				.data_lacamento(lancamento.getDataLancamento()).lacamentoID(lancamento.getId())
 				.tipoID(lancamento.getTipoLancamento().id).tipo(lancamento.getTipoLancamento().tipo)
-				.descricao(lancamento.getDescricao()).valor(lancamento.getValor()).build();
+				.descricao(lancamento.getDescricao()).valor(lancamento.getValor())
+				.isRenda(lancamento.getTipoLancamento().isRenda).build();
 	}
 
 }
