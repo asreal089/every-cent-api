@@ -97,6 +97,7 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 	public ResponseEntity<String> patch(Long userID, Long orcamentoID, OrcamentoRequestDTO orcamentoAtualizado) {
 		Optional<Orcamento> orcamento = orcamentoRepo.findById(orcamentoID);
 		Optional<TipoLancamento> tipo = tipoRepo.findById(orcamentoAtualizado.getTipo_id());
+		
 		if(orcamento.isPresent()&& tipo.isPresent()){
 			Optional<Orcamento>orcamentoSemelhante = getOrcamentosByUserIdAndTipoID(userID, orcamentoAtualizado.getTipo_id());
 			if(orcamento.get().getUser().getId()== userID) {

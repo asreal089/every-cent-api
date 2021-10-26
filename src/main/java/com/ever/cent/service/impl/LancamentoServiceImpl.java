@@ -12,6 +12,8 @@ import com.ever.cent.domain.dto.lacamento.LancamentosResponseDTO;
 import com.ever.cent.domain.model.Lancamento;
 import com.ever.cent.domain.model.TipoLancamento;
 import com.ever.cent.domain.model.User;
+import com.ever.cent.exception.ForbidenAccessException;
+import com.ever.cent.exception.NotFoundException;
 import com.ever.cent.repository.LancamentoRepository;
 import com.ever.cent.repository.TipoLancamentoRepository;
 import com.ever.cent.repository.UserRepository;
@@ -69,14 +71,27 @@ public class LancamentoServiceImpl implements LancamentoService {
 
 	@Override
 	public LancamentosResponseDTO updateLancamento(Long userID, LancamentoRequestDTO lancamento) {
-		Lancamento entidade = repo.findById(lancamento.getLacamentoID()).get();
-		entidade.setDataLancamento(lancamento.getData_lacamento());
-		entidade.setDescricao(lancamento.getDescricao());
-		TipoLancamento tipo = tipoRepo.findById(lancamento.getTipoID()).get();
-		entidade.setTipoLancamento(tipo);
-		entidade.setValor(lancamento.getValor());
-
-		return converLancamentoToResponseDTO(repo.save(entidade));
+		
+			
+			Optional<Lancamento> lancamentoEntitdade = repo.findById(lancamento.getLacamentoID());
+			if(!lancamentoEntitdade.isPresent()) {
+				throw new NotFoundException("Lancamento não encontrado.");
+			}
+			Lancamento entidade = lancamentoEntitdade.get();
+			
+			if(entidade.getUser().getId() != userID) {
+				throw new ForbidenAccessException("Acesso negado.");				
+			}
+			entidade.setDataLancamento(lancamento.getData_lacamento());
+			entidade.setDescricao(lancamento.getDescricao());
+			TipoLancamento tipo = tipoRepo.findById(lancamento.getTipoID()).get();
+			entidade.setTipoLancamento(tipo);
+			entidade.setValor(lancamento.getValor());
+			
+			return converLancamentoToResponseDTO(repo.save(entidade));
+		
+		
+		
 	}
 
 	private LancamentosResponseDTO converLancamentoToResponseDTO(Lancamento lancamento) {
