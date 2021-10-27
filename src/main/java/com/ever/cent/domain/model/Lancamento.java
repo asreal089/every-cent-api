@@ -46,4 +46,5 @@ public class Lancamento {
 	
 	@Column(name= "data_lancamento")
 	private Date dataLancamento;
+
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.ever.cent.domain.dto.lacamento.LancamentoRequestDTO;
 import com.ever.cent.domain.dto.lacamento.LancamentosResponseDTO;
-import com.ever.cent.exception.ForbidenAccessException;
 
 public interface LancamentoService {
 	

@@ -22,6 +22,10 @@ import com.ever.cent.service.LancamentoService;
 @Service
 public class LancamentoServiceImpl implements LancamentoService {
 
+	private static final String FORBIDEN = "Acesso negado ao lançamento.";
+
+	private static final String NOT_FOUND = "Lancamento não encontrado.";
+
 	@Autowired
 	private LancamentoRepository repo;
 
@@ -44,10 +48,13 @@ public class LancamentoServiceImpl implements LancamentoService {
 	@Override
 	public LancamentosResponseDTO getLancamentoByID(Long userID, Long lancamentoID) {
 		Optional<Lancamento> lancamento = repo.findById(lancamentoID);
-		if (lancamento.isPresent()) {
-			return converLancamentoToResponseDTO(lancamento.get());
+		if (!lancamento.isPresent()) {
+			throw new NotFoundException(NOT_FOUND);
 		}
-		return null;
+		if(lancamento.get().getUser().getId() !=  userID) {
+			throw new ForbidenAccessException(FORBIDEN);
+		}
+		return converLancamentoToResponseDTO(lancamento.get());
 	}
 
 	@Override
@@ -65,22 +72,29 @@ public class LancamentoServiceImpl implements LancamentoService {
 
 	@Override
 	public boolean deleteLancamentoByID(Long userID, Long lacamentoID) {
+		Optional<Lancamento> entidade = repo.findById(lacamentoID);
+		if(!entidade.isPresent()) {
+			throw new NotFoundException(NOT_FOUND);
+		}
+		Lancamento lancamento = entidade.get();
+		if(lancamento.getUser().getId() != userID) {
+			throw new ForbidenAccessException(FORBIDEN);
+		}
 		repo.deleteById(lacamentoID);
 		return true;
 	}
 
 	@Override
 	public LancamentosResponseDTO updateLancamento(Long userID, LancamentoRequestDTO lancamento) {
-		
-			
+
 			Optional<Lancamento> lancamentoEntitdade = repo.findById(lancamento.getLacamentoID());
 			if(!lancamentoEntitdade.isPresent()) {
-				throw new NotFoundException("Lancamento não encontrado.");
+				throw new NotFoundException(NOT_FOUND);
 			}
 			Lancamento entidade = lancamentoEntitdade.get();
 			
 			if(entidade.getUser().getId() != userID) {
-				throw new ForbidenAccessException("Acesso negado.");				
+				throw new ForbidenAccessException(FORBIDEN);				
 			}
 			entidade.setDataLancamento(lancamento.getData_lacamento());
 			entidade.setDescricao(lancamento.getDescricao());

@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ever.cent.domain.dto.orcamento.OrcamentoRequestDTO;
@@ -14,6 +12,8 @@ import com.ever.cent.domain.dto.orcamento.OrcamentoResponseDTO;
 import com.ever.cent.domain.model.Orcamento;
 import com.ever.cent.domain.model.TipoLancamento;
 import com.ever.cent.domain.model.User;
+import com.ever.cent.exception.ForbidenAccessException;
+import com.ever.cent.exception.NotFoundException;
 import com.ever.cent.repository.OrcamentoRepository;
 import com.ever.cent.repository.TipoLancamentoRepository;
 import com.ever.cent.repository.UserRepository;
@@ -21,6 +21,10 @@ import com.ever.cent.service.OrcamentoService;
 
 @Service
 public class OrcamentoServiceImpl implements OrcamentoService {
+
+	private static final String FORBIDEN = "Acesso negado ao orçamento";
+
+	private static final String NOT_FOUND = "Orçamento não encontrado";
 
 	@Autowired
 	private OrcamentoRepository orcamentoRepo;
@@ -32,7 +36,7 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 	private TipoLancamentoRepository tipoRepo;
 
 	@Override
-	public ResponseEntity<String> novoOrcamento(Long userID, OrcamentoRequestDTO orcamento) {
+	public OrcamentoResponseDTO novoOrcamento(Long userID, OrcamentoRequestDTO orcamento) {
 		Optional<User> usuario = userRepo.findById(Long.valueOf(userID));
 		Optional<TipoLancamento> tipo = tipoRepo.findById(Integer.valueOf(orcamento.getTipo_id()));
 		Optional<Orcamento> entidadeExistente =  getOrcamentosByUserIdAndTipoID(userID, orcamento.getTipo_id());
@@ -42,7 +46,7 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		Orcamento novoOrcamento = Orcamento.builder().user(usuario.get()).tipoLancamento(tipo.get())
 				.valor(orcamento.getValor()).build();
 		orcamentoRepo.save(novoOrcamento);
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return convertToOrcamentoResponseDTO(novoOrcamento);
 	}
 
 	@Override
@@ -55,19 +59,18 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		return response;
 	}
 	
-	public ResponseEntity<OrcamentoResponseDTO> getOrcamentoById(Long userID, Long orcamentoID) {
+	public OrcamentoResponseDTO getOrcamentoById(Long userID, Long orcamentoID) {
 		Optional<Orcamento> orcamento = orcamentoRepo.findById(orcamentoID);
 		if(orcamento.isPresent()) {
 			if(!(orcamento.get().user == null)) {				
 				if(orcamento.get().user.getId() == userID) {
 					OrcamentoResponseDTO response = convertToOrcamentoResponseDTO(orcamento.get());
-					return new ResponseEntity<OrcamentoResponseDTO>(response, HttpStatus.OK);
+					return response;
 				}
 			}
-			return new ResponseEntity<OrcamentoResponseDTO>(OrcamentoResponseDTO.builder().build(), HttpStatus.FORBIDDEN);
+			throw new ForbidenAccessException(FORBIDEN);
 		}
-
-		return new ResponseEntity<OrcamentoResponseDTO>(OrcamentoResponseDTO.builder().build(), HttpStatus.NOT_FOUND);
+		throw new NotFoundException(NOT_FOUND);
 	}
 
 	private OrcamentoResponseDTO convertToOrcamentoResponseDTO(Orcamento savedEntity) {
@@ -82,19 +85,19 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		return orcamento;
 	}
 
-	public ResponseEntity<String> delete(Long userID, Long orcamentoID) {
+	public Boolean delete(Long userID, Long orcamentoID) {
 		Optional<Orcamento> orcamento = orcamentoRepo.findById(orcamentoID);
 		if(orcamento.isPresent()){			
 			if(orcamento.get().getUser().getId()== userID) {			
 				orcamentoRepo.deleteById(orcamentoID);
-				return new ResponseEntity<String>(HttpStatus.OK);
+				return true;
 			}
-			return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+			throw new ForbidenAccessException(FORBIDEN);
 		}
-		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+		throw new NotFoundException(NOT_FOUND);
 	}
 	
-	public ResponseEntity<String> patch(Long userID, Long orcamentoID, OrcamentoRequestDTO orcamentoAtualizado) {
+	public OrcamentoResponseDTO patch(Long userID, Long orcamentoID, OrcamentoRequestDTO orcamentoAtualizado) {
 		Optional<Orcamento> orcamento = orcamentoRepo.findById(orcamentoID);
 		Optional<TipoLancamento> tipo = tipoRepo.findById(orcamentoAtualizado.getTipo_id());
 		
@@ -107,10 +110,10 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 				orcamento.get().setTipoLancamento(tipo.get());
 				orcamento.get().setValor(orcamentoAtualizado.getValor());
 				orcamentoRepo.save(orcamento.get());
-				return new ResponseEntity<String>(HttpStatus.OK);
+				return convertToOrcamentoResponseDTO(orcamento.get());
 			}
-			return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+			throw new ForbidenAccessException(FORBIDEN);
 		}
-		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+		throw new NotFoundException(NOT_FOUND);
 	}
 }
