@@ -3,6 +3,8 @@ package com.ever.cent.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,28 +31,30 @@ public class LancamentoController {
 	}
 
 	@GetMapping("/{userID}/{lancamentoID}")
-	public LancamentosResponseDTO getLancamentoByUserId(@PathVariable(value = "userID") String userID,
+	public ResponseEntity<LancamentosResponseDTO> getLancamentoByUserId(@PathVariable(value = "userID") String userID,
 			@PathVariable(value = "lancamentoID") String lancamentoID) {
-		return service.getLancamentoByID(Long.valueOf(userID), Long.valueOf(lancamentoID));
+		LancamentosResponseDTO lancamentoByID = service.getLancamentoByID(Long.valueOf(userID), Long.valueOf(lancamentoID));
+		return new ResponseEntity<LancamentosResponseDTO>(lancamentoByID, HttpStatus.OK);
 	}
 
 	@PostMapping("/{userID}")
-	public LancamentosResponseDTO postLancamento(@PathVariable(value = "userID") String userID,
+	public ResponseEntity<LancamentosResponseDTO> postLancamento(@PathVariable(value = "userID") String userID,
 			@RequestBody LancamentoRequestDTO lancamento) {
-		return service.saveNovoLancamento(Long.valueOf(userID), lancamento);
+		LancamentosResponseDTO novoLancamento = service.saveNovoLancamento(Long.valueOf(userID), lancamento);
+		return new ResponseEntity<>(novoLancamento, HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{userID}/{lancamentoID}")
-	public boolean deleteLancamento(@PathVariable(value = "userID") String userID,
+	public ResponseEntity<Object> deleteLancamento(@PathVariable(value = "userID") String userID,
 			@PathVariable(value = "lancamentoID") String lancamentoID) {
-		boolean response = service.deleteLancamentoByID(Long.valueOf(userID), Long.valueOf(lancamentoID));
-		return response;
+		service.deleteLancamentoByID(Long.valueOf(userID), Long.valueOf(lancamentoID));
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PatchMapping("/{userID}/{lancamentoID}")
-	public LancamentosResponseDTO patchLancamento(@PathVariable(value = "userID") String userID,
+	public ResponseEntity<LancamentosResponseDTO> patchLancamento(@PathVariable(value = "userID") String userID,
 			@PathVariable(value = "lancamentoID") String lancamentoID, @RequestBody LancamentoRequestDTO lancamento ) {
 		LancamentosResponseDTO response = service.updateLancamento(Long.valueOf(userID), lancamento);
-		return response;
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }
