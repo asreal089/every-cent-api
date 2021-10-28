@@ -26,8 +26,8 @@ public class OrcamentoController {
 	private OrcamentoServiceImpl orcamentoService;
 
 	@GetMapping("/{userID}")
-	public List<OrcamentoResponseDTO> getOrcamentoByUserId(@PathVariable(value = "userID") String userID) {
-		return orcamentoService.getOrcamentosByUserId(Long.valueOf(userID));
+	public ResponseEntity<List<OrcamentoResponseDTO>> getOrcamentoByUserId(@PathVariable(value = "userID") String userID) {
+		return new ResponseEntity<List<OrcamentoResponseDTO>>(orcamentoService.getOrcamentosByUserId(Long.valueOf(userID)), HttpStatus.OK);
 	}
 
 	@GetMapping("/{userID}/{orcamentoID}")

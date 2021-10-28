@@ -21,19 +21,22 @@ import com.ever.cent.service.impl.LancamentoServiceImpl;
 @RestController
 @RequestMapping("api/lancamento")
 public class LancamentoController {
-	
+
 	@Autowired
 	private LancamentoServiceImpl service;
-	
+
 	@GetMapping("/{userID}")
-	public List<LancamentosResponseDTO> getLancamentoByUserId(@PathVariable(value = "userID") String userID) {
-		return service.getLacamentos(Long.valueOf(userID));
+	public ResponseEntity<List<LancamentosResponseDTO>> getLancamentoByUserId(
+			@PathVariable(value = "userID") String userID) {
+		return new ResponseEntity<List<LancamentosResponseDTO>>(service.getLacamentos(Long.valueOf(userID)),
+				HttpStatus.OK);
 	}
 
 	@GetMapping("/{userID}/{lancamentoID}")
 	public ResponseEntity<LancamentosResponseDTO> getLancamentoByUserId(@PathVariable(value = "userID") String userID,
 			@PathVariable(value = "lancamentoID") String lancamentoID) {
-		LancamentosResponseDTO lancamentoByID = service.getLancamentoByID(Long.valueOf(userID), Long.valueOf(lancamentoID));
+		LancamentosResponseDTO lancamentoByID = service.getLancamentoByID(Long.valueOf(userID),
+				Long.valueOf(lancamentoID));
 		return new ResponseEntity<LancamentosResponseDTO>(lancamentoByID, HttpStatus.OK);
 	}
 
@@ -43,17 +46,17 @@ public class LancamentoController {
 		LancamentosResponseDTO novoLancamento = service.saveNovoLancamento(Long.valueOf(userID), lancamento);
 		return new ResponseEntity<>(novoLancamento, HttpStatus.CREATED);
 	}
-	
+
 	@DeleteMapping("/{userID}/{lancamentoID}")
 	public ResponseEntity<Object> deleteLancamento(@PathVariable(value = "userID") String userID,
 			@PathVariable(value = "lancamentoID") String lancamentoID) {
 		service.deleteLancamentoByID(Long.valueOf(userID), Long.valueOf(lancamentoID));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	@PatchMapping("/{userID}/{lancamentoID}")
 	public ResponseEntity<LancamentosResponseDTO> patchLancamento(@PathVariable(value = "userID") String userID,
-			@PathVariable(value = "lancamentoID") String lancamentoID, @RequestBody LancamentoRequestDTO lancamento ) {
+			@PathVariable(value = "lancamentoID") String lancamentoID, @RequestBody LancamentoRequestDTO lancamento) {
 		LancamentosResponseDTO response = service.updateLancamento(Long.valueOf(userID), lancamento);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
