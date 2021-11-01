@@ -110,7 +110,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 
 	private LancamentosResponseDTO converLancamentoToResponseDTO(Lancamento lancamento) {
 		return LancamentosResponseDTO.builder().userID(lancamento.getUser().getId())
-				.data_lacamento(lancamento.getDataLancamento()).lacamentoID(lancamento.getId())
+				.data_lacamento(lancamento.getDataLancamento()).lancamentoID(lancamento.getId())
 				.tipoID(lancamento.getTipoLancamento().id).tipo(lancamento.getTipoLancamento().tipo)
 				.descricao(lancamento.getDescricao()).valor(lancamento.getValor())
 				.isRenda(lancamento.getTipoLancamento().isRenda).build();

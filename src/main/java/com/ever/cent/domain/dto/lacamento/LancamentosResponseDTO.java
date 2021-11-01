@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LancamentosResponseDTO {
 	public Long userID;
-	public Long lacamentoID;
+	public Long lancamentoID;
 	public Integer tipoID;
 	public String tipo;
 	public boolean isRenda;
