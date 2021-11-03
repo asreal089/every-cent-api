@@ -24,4 +24,4 @@ mvn spring-boot:run
 
 ### O que estara disponível na API:
 
-![swagger]()
+![swagger](https://github.com/asreal089/every-cent-api/blob/master/src/main/resources/assets/126BB659-3865-45AA-B367-AE23E6A0959D_1_105_c.jpeg?raw=true)
