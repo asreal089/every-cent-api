@@ -1,0 +1,20 @@
+spring.jpa.database=POSTGRESQL
+spring.datasource.platform=postgres
+
+spring.jpa.show-sql=true
+spring.database.driverClassName=org.postgresql.Driver
+spring.datasource.url=jdbc:postgresql://localhost:5432/everycent
+spring.datasource.username=postgres
+spring.datasource.password=<SuaSenha>
+server.port=8080
+ 
+# Social login provider props
+spring.security.oauth2.client.registration.google.clientId=<chave-cliente google oauth API>
+spring.security.oauth2.client.registration.google.clientSecret=<cliente secret>
+ 
+app.auth.tokenSecret=<cliente secret>
+app.auth.tokenExpirationMsec=864000000
+
+app.oauth2.authorizedRedirectUris=http://localhost:8081/oauth2/redirect,myandroidapp://oauth2/redirect,myiosapp://oauth2/redirect
+
+logging.level.org.springframework=TRACE

@@ -27,8 +27,6 @@ public class CustomOidcUserService extends OidcUserService {
             throw ex;
         } catch (Exception ex) {
             ex.printStackTrace();
-            // Throwing an instance of AuthenticationException will trigger the
-            // OAuth2AuthenticationFailureHandler
             throw new OAuth2AuthenticationProcessingException(ex.getMessage(), ex.getCause());
         }
     }
