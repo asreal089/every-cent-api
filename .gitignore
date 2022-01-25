@@ -64,7 +64,7 @@ application.properties
 .classpath
 
 # End of https://www.gitignore.io/api/eclipse/target/
-!.mvn/wrapper/maven-wrapper.jar
+#!.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -152,3 +152,6 @@ local.properties
 # Created by git for backups. To disable backups in Git:
 # $ git config --global mergetool.keepBackup false
 *.orig
+### vscode e itellij
+.vscode*
+.idea*
