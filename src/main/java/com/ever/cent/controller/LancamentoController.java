@@ -28,7 +28,7 @@ public class LancamentoController {
 	@GetMapping("/{userID}")
 	public ResponseEntity<List<LancamentosResponseDTO>> getLancamentoByUserId(
 			@PathVariable(value = "userID") String userID) {
-		return new ResponseEntity<List<LancamentosResponseDTO>>(service.getLacamentos(Long.valueOf(userID)),
+		return new ResponseEntity<>(service.getLacamentos(Long.valueOf(userID)),
 				HttpStatus.OK);
 	}
 
@@ -37,7 +37,7 @@ public class LancamentoController {
 			@PathVariable(value = "lancamentoID") String lancamentoID) {
 		LancamentosResponseDTO lancamentoByID = service.getLancamentoByID(Long.valueOf(userID),
 				Long.valueOf(lancamentoID));
-		return new ResponseEntity<LancamentosResponseDTO>(lancamentoByID, HttpStatus.OK);
+		return new ResponseEntity<>(lancamentoByID, HttpStatus.OK);
 	}
 
 	@PostMapping("/{userID}")

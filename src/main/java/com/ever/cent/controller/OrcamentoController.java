@@ -27,21 +27,21 @@ public class OrcamentoController {
 
 	@GetMapping("/{userID}")
 	public ResponseEntity<List<OrcamentoResponseDTO>> getOrcamentoByUserId(@PathVariable(value = "userID") String userID) {
-		return new ResponseEntity<List<OrcamentoResponseDTO>>(orcamentoService.getOrcamentosByUserId(Long.valueOf(userID)), HttpStatus.OK);
+		return new ResponseEntity<>(orcamentoService.getOrcamentosByUserId(Long.valueOf(userID)), HttpStatus.OK);
 	}
 
 	@GetMapping("/{userID}/{orcamentoID}")
 	public ResponseEntity<OrcamentoResponseDTO> getOrcamentoByUserId(@PathVariable(value = "userID") String userID,
 			@PathVariable(value = "orcamentoID") String orcamentoID) {
 		OrcamentoResponseDTO orcamentoById = orcamentoService.getOrcamentoById(Long.valueOf(userID), Long.valueOf(orcamentoID));
-		return new ResponseEntity<OrcamentoResponseDTO>(orcamentoById, HttpStatus.OK);
+		return new ResponseEntity<>(orcamentoById, HttpStatus.OK);
 	}
 
 	@PostMapping("/{userID}")
 	public ResponseEntity<OrcamentoResponseDTO> postOrcamento(@PathVariable(value = "userID") String userID,
 			@RequestBody OrcamentoRequestDTO orcamento) {
 		OrcamentoResponseDTO novoOrcamento = orcamentoService.novoOrcamento(Long.valueOf(userID), orcamento);
-		return new ResponseEntity<OrcamentoResponseDTO>(novoOrcamento, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(novoOrcamento, HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping("/{userID}/{orcamentoID}")
@@ -58,7 +58,7 @@ public class OrcamentoController {
 	public ResponseEntity<OrcamentoResponseDTO> patchOrcamento(@PathVariable(value = "userID") String userID,
 			@PathVariable(value = "orcamentoID") String orcamentoID, @RequestBody OrcamentoRequestDTO orcamento ) {
 		OrcamentoResponseDTO patch = orcamentoService.patch(Long.valueOf(userID), Long.valueOf(orcamentoID), orcamento);
-		return new ResponseEntity<OrcamentoResponseDTO>(patch, HttpStatus.OK);
+		return new ResponseEntity<>(patch, HttpStatus.OK);
 	}
 
 }

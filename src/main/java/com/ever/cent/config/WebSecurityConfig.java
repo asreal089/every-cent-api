@@ -65,7 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.disable().formLogin().disable().httpBasic().disable().exceptionHandling()
 				.authenticationEntryPoint(new RestAuthenticationEntryPoint()).and().authorizeRequests()
 				.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/security",
-						"/swagger-ui.html", "/webjars/**", "**", "/", "/error", "/api/all", "/api/auth/**", "/oauth2/**",
+						"/swagger-ui.html", "/webjars/**", "**", "/", "/error", "/api/all", "/api/auth/**",
+						"/oauth2/**",
 						"/tipo-lancamento")
 				.permitAll().anyRequest().authenticated().and().oauth2Login().authorizationEndpoint()
 				.authorizationRequestRepository(cookieAuthorizationRequestRepository()).and().redirectionEndpoint()

@@ -62,10 +62,7 @@ public class Role implements Serializable {
             return false;
         }
         final Role role = (Role) obj;
-        if (!role.equals(role.name)) {
-            return false;
-        }
-        return true;
+        return role.name.equals(name);
     }
  
     @Override
