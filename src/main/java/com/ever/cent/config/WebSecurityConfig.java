@@ -64,10 +64,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf()
 				.disable().formLogin().disable().httpBasic().disable().exceptionHandling()
 				.authenticationEntryPoint(new RestAuthenticationEntryPoint()).and().authorizeRequests()
-				.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/security",
-						"/swagger-ui.html", "/webjars/**", "**", "/", "/error", "/api/all", "/api/auth/**",
-						"/oauth2/**",
-						"/tipo-lancamento")
+				.antMatchers(
+					"/v3/api-docs",
+					"/configuration/ui",
+					"/swagger-resources/**",
+					"/configuration/security",
+					"/swagger-ui.html",
+					"/webjars/**",
+					"**/favicon.ico/**",
+					"swagger-ui.html",
+					"/swagger-ui/**",
+					"/v3/api-docs/swagger-config",
+					"/", "/error", "/api/all", "/api/auth/**",
+					"/oauth2/**",
+					"/tipo-lancamento")
 				.permitAll().anyRequest().authenticated().and().oauth2Login().authorizationEndpoint()
 				.authorizationRequestRepository(cookieAuthorizationRequestRepository()).and().redirectionEndpoint()
 				.and().userInfoEndpoint().oidcUserService(customOidcUserService).userService(customOAuth2UserService)
