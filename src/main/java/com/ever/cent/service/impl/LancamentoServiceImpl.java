@@ -1,8 +1,13 @@
 package com.ever.cent.service.impl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +60,16 @@ public class LancamentoServiceImpl implements LancamentoService {
 			throw new ForbidenAccessException(FORBIDEN);
 		}
 		return converLancamentoToResponseDTO(lancamento.get());
+	}
+
+	@Override
+	public List<LancamentosResponseDTO> getLancamentosPorMes(Long userId, Integer mes, Integer ano){
+		List<Lancamento> lancamentos = repo.getByUserYearAndMonth(userId, ano, mes);
+		List<LancamentosResponseDTO> response = new ArrayList<>();
+		for (Lancamento lancamento : lancamentos) {
+			response.add(converLancamentoToResponseDTO(lancamento));
+		}
+		return response;
 	}
 
 	@Override

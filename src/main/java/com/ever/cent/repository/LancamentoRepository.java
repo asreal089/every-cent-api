@@ -3,6 +3,8 @@ package com.ever.cent.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ever.cent.domain.model.Lancamento;
@@ -12,6 +14,9 @@ import com.ever.cent.domain.model.Lancamento;
 public interface LancamentoRepository extends JpaRepository<Lancamento, Long> {
 	
 	List<Lancamento> findByUserId(Long user_id);
+
+	@Query("select l from Lancamento l where l.user.id = :user_id and EXTRACT (year FROM l.dataLancamento) = :year and EXTRACT (month FROM l.dataLancamento) = :month")
+	List<Lancamento> getByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year, @Param("month") int month);
 
 	
 }

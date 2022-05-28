@@ -32,12 +32,20 @@ public class LancamentoController {
 				HttpStatus.OK);
 	}
 
-	@GetMapping("/{userID}/{lancamentoID}")
+	@GetMapping("/{userID}/registro/{lancamentoID}")
 	public ResponseEntity<LancamentosResponseDTO> getLancamentoByUserId(@PathVariable(value = "userID") String userID,
 			@PathVariable(value = "lancamentoID") String lancamentoID) {
 		LancamentosResponseDTO lancamentoByID = service.getLancamentoByID(Long.valueOf(userID),
 				Long.valueOf(lancamentoID));
 		return new ResponseEntity<>(lancamentoByID, HttpStatus.OK);
+	}
+
+
+	@GetMapping("/{userID}/mes/{mes}/{ano}")
+	public ResponseEntity<List<LancamentosResponseDTO>> getLancamentoByUserId(@PathVariable(value = "userID") String userID,
+			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano) {
+		List<LancamentosResponseDTO> lancamentosByID = service.getLancamentosPorMes(Long.valueOf(userID), mes, ano);
+		return new ResponseEntity<>(lancamentosByID, HttpStatus.OK);
 	}
 
 	@PostMapping("/{userID}")
