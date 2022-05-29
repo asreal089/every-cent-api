@@ -1,16 +1,8 @@
 package com.ever.cent.service.impl;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.ever.cent.domain.dto.lacamento.LancamentoRequestDTO;
 import com.ever.cent.domain.dto.lacamento.LancamentosResponseDTO;
@@ -23,6 +15,9 @@ import com.ever.cent.repository.LancamentoRepository;
 import com.ever.cent.repository.TipoLancamentoRepository;
 import com.ever.cent.repository.UserRepository;
 import com.ever.cent.service.LancamentoService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class LancamentoServiceImpl implements LancamentoService {
@@ -43,11 +38,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 	@Override
 	public List<LancamentosResponseDTO> getLacamentos(Long userID) {
 		List<Lancamento> lancamentos = repo.findByUserId(userID);
-		List<LancamentosResponseDTO> response = new ArrayList<>();
-		for (Lancamento lancamento : lancamentos) {
-			response.add(converLancamentoToResponseDTO(lancamento));
-		}
-		return response;
+		return converterListaLancamentoToResponseDTO(lancamentos);
 	}
 
 	@Override
@@ -65,31 +56,19 @@ public class LancamentoServiceImpl implements LancamentoService {
 	@Override
 	public List<LancamentosResponseDTO> getLancamentosPorMes(Long userId, Integer mes, Integer ano){
 		List<Lancamento> lancamentos = repo.getByUserYearAndMonth(userId, ano, mes);
-		List<LancamentosResponseDTO> response = new ArrayList<>();
-		for (Lancamento lancamento : lancamentos) {
-			response.add(converLancamentoToResponseDTO(lancamento));
-		}
-		return response;
+		return converterListaLancamentoToResponseDTO(lancamentos);
 	}
 
 	@Override
 	public List<LancamentosResponseDTO> getLancamentosRendaPorMes(Long userId, Integer mes, Integer ano){
 		List<Lancamento> lancamentos = repo.getRendaByUserYearAndMonth(userId, ano, mes);
-		List<LancamentosResponseDTO> response = new ArrayList<>();
-		for (Lancamento lancamento : lancamentos) {
-			response.add(converLancamentoToResponseDTO(lancamento));
-		}
-		return response;
+		return converterListaLancamentoToResponseDTO(lancamentos);
 	}
 
 	@Override
 	public List<LancamentosResponseDTO> getLancamentosGastoPorMes(Long userId, Integer mes, Integer ano){
 		List<Lancamento> lancamentos = repo.getGastoByUserYearAndMonth(userId, ano, mes);
-		List<LancamentosResponseDTO> response = new ArrayList<>();
-		for (Lancamento lancamento : lancamentos) {
-			response.add(converLancamentoToResponseDTO(lancamento));
-		}
-		return response;
+		return converterListaLancamentoToResponseDTO(lancamentos);
 	}
 
 	@Override
@@ -141,6 +120,14 @@ public class LancamentoServiceImpl implements LancamentoService {
 		
 		
 		
+	}
+
+	private List<LancamentosResponseDTO> converterListaLancamentoToResponseDTO(List<Lancamento> lancamentos) {
+		List<LancamentosResponseDTO> response = new ArrayList<>();
+		for (Lancamento lancamento : lancamentos) {
+			response.add(converLancamentoToResponseDTO(lancamento));
+		}
+		return response;
 	}
 
 	private LancamentosResponseDTO converLancamentoToResponseDTO(Lancamento lancamento) {
