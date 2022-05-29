@@ -18,5 +18,11 @@ public interface LancamentoRepository extends JpaRepository<Lancamento, Long> {
 	@Query("select l from Lancamento l where l.user.id = :user_id and EXTRACT (year FROM l.dataLancamento) = :year and EXTRACT (month FROM l.dataLancamento) = :month")
 	List<Lancamento> getByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year, @Param("month") int month);
 
-	
+	@Query("select l from Lancamento l where l.user.id = :user_id and l.tipoLancamento.isRenda = false and EXTRACT (year FROM l.dataLancamento) = :year and EXTRACT (month FROM l.dataLancamento) = :month")
+	List<Lancamento> getGastoByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year, @Param("month") int month);
+
+	@Query("select l from Lancamento l where l.user.id = :user_id and l.tipoLancamento.isRenda = true and EXTRACT (year FROM l.dataLancamento) = :year and EXTRACT (month FROM l.dataLancamento) = :month")
+	List<Lancamento> getRendaByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year, @Param("month") int month);
+
+
 }

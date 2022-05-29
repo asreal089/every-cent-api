@@ -73,6 +73,26 @@ public class LancamentoServiceImpl implements LancamentoService {
 	}
 
 	@Override
+	public List<LancamentosResponseDTO> getLancamentosRendaPorMes(Long userId, Integer mes, Integer ano){
+		List<Lancamento> lancamentos = repo.getRendaByUserYearAndMonth(userId, ano, mes);
+		List<LancamentosResponseDTO> response = new ArrayList<>();
+		for (Lancamento lancamento : lancamentos) {
+			response.add(converLancamentoToResponseDTO(lancamento));
+		}
+		return response;
+	}
+
+	@Override
+	public List<LancamentosResponseDTO> getLancamentosGastoPorMes(Long userId, Integer mes, Integer ano){
+		List<Lancamento> lancamentos = repo.getGastoByUserYearAndMonth(userId, ano, mes);
+		List<LancamentosResponseDTO> response = new ArrayList<>();
+		for (Lancamento lancamento : lancamentos) {
+			response.add(converLancamentoToResponseDTO(lancamento));
+		}
+		return response;
+	}
+
+	@Override
 	public LancamentosResponseDTO saveNovoLancamento(Long userID, LancamentoRequestDTO lancamento) {
 		User user = userRepo.findById(userID).get();
 		TipoLancamento tipo = tipoRepo.findById(lancamento.getTipoID()).get();

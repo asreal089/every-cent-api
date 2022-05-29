@@ -10,7 +10,12 @@ public interface LancamentoService {
 	public List<LancamentosResponseDTO> getLacamentos(Long userID);
 
 	public List<LancamentosResponseDTO> getLancamentosPorMes(Long userId, Integer mes, Integer ano);
-		
+
+	public List<LancamentosResponseDTO> getLancamentosGastoPorMes(Long userId, Integer mes, Integer ano);
+
+	public List<LancamentosResponseDTO> getLancamentosRendaPorMes(Long userId, Integer mes, Integer ano);
+
+	
 	public LancamentosResponseDTO getLancamentoByID(Long userID, Long lancamentoID);
 	
 	public LancamentosResponseDTO saveNovoLancamento(Long userID, LancamentoRequestDTO lancamento);
