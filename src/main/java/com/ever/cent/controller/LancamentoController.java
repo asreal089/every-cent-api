@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ever.cent.config.CurrentUser;
 import com.ever.cent.domain.dto.LocalUser;
+import com.ever.cent.domain.dto.Resumo;
 import com.ever.cent.domain.dto.lacamento.LancamentoRequestDTO;
 import com.ever.cent.domain.dto.lacamento.LancamentosResponseDTO;
 import com.ever.cent.service.impl.LancamentoServiceImpl;
@@ -61,6 +62,20 @@ public class LancamentoController {
 	public ResponseEntity<List<LancamentosResponseDTO>> getLancamentoGastoByUserId(@PathVariable(value = "userID") String userID,
 			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano, @CurrentUser LocalUser user) {
 		List<LancamentosResponseDTO> lancamentosByID = service.getLancamentosGastoPorMes(user.getUser().getId(), mes, ano);
+		return new ResponseEntity<>(lancamentosByID, HttpStatus.OK);
+	}
+
+	@GetMapping("/{userID}/resumo/gasto/{mes}/{ano}")
+	public ResponseEntity<List<Resumo>> getLancamentoResumoGastoByUserId(@PathVariable(value = "userID") String userID,
+			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano, @CurrentUser LocalUser user) {
+		List<Resumo> lancamentosByID = service.getLancamentosGastoResumoPorMes(user.getUser().getId(), mes, ano);
+		return new ResponseEntity<>(lancamentosByID, HttpStatus.OK);
+	}
+
+	@GetMapping("/{userID}/resumo/renda/{mes}/{ano}")
+	public ResponseEntity<List<Resumo>> getLancamentoResumoRendaByUserId(@PathVariable(value = "userID") String userID,
+			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano, @CurrentUser LocalUser user) {
+		List<Resumo> lancamentosByID = service.getLancamentosRendaResumoPorMes(user.getUser().getId(), mes, ano);
 		return new ResponseEntity<>(lancamentosByID, HttpStatus.OK);
 	}
 

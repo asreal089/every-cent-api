@@ -2,6 +2,7 @@ package com.ever.cent.service;
 
 import java.util.List;
 
+import com.ever.cent.domain.dto.Resumo;
 import com.ever.cent.domain.dto.lacamento.LancamentoRequestDTO;
 import com.ever.cent.domain.dto.lacamento.LancamentosResponseDTO;
 
@@ -15,6 +16,9 @@ public interface LancamentoService {
 
 	public List<LancamentosResponseDTO> getLancamentosRendaPorMes(Long userId, Integer mes, Integer ano);
 
+	public List<Resumo> getLancamentosGastoResumoPorMes(Long userId, Integer mes, Integer ano);
+
+	public List<Resumo> getLancamentosRendaResumoPorMes(Long userId, Integer mes, Integer ano);
 	
 	public LancamentosResponseDTO getLancamentoByID(Long userID, Long lancamentoID);
 	
