@@ -28,75 +28,81 @@ public class LancamentoController {
 	@Autowired
 	private LancamentoServiceImpl service;
 
-	@GetMapping("/{userID}")
+	@GetMapping("/")
 	public ResponseEntity<List<LancamentosResponseDTO>> getLancamentoByUserId(
-			@PathVariable(value = "userID") String userID) {
-		return new ResponseEntity<>(service.getLacamentos(Long.valueOf(userID)),
+			@CurrentUser LocalUser user) {
+		return new ResponseEntity<>(service.getLacamentos(user.getUser().getId()),
 				HttpStatus.OK);
 	}
 
-	@GetMapping("/{userID}/registro/{lancamentoID}")
-	public ResponseEntity<LancamentosResponseDTO> getLancamentoByUserId(@PathVariable(value = "userID") String userID,
-			@PathVariable(value = "lancamentoID") String lancamentoID) {
-		LancamentosResponseDTO lancamentoByID = service.getLancamentoByID(Long.valueOf(userID),
+	@GetMapping("/registro/{lancamentoID}")
+	public ResponseEntity<LancamentosResponseDTO> getLancamentoByUserId(
+			@PathVariable(value = "lancamentoID") String lancamentoID, @CurrentUser LocalUser user) {
+		LancamentosResponseDTO lancamentoByID = service.getLancamentoByID(user.getUser().getId(),
 				Long.valueOf(lancamentoID));
 		return new ResponseEntity<>(lancamentoByID, HttpStatus.OK);
 	}
 
-
-	@GetMapping("/{userID}/mes/{mes}/{ano}")
-	public ResponseEntity<List<LancamentosResponseDTO>> getLancamentoByUserId(@PathVariable(value = "userID") String userID,
-			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano, @CurrentUser LocalUser user) {
+	@GetMapping("/mes/{mes}/{ano}")
+	public ResponseEntity<List<LancamentosResponseDTO>> getLancamentoByUserId(
+			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano,
+			@CurrentUser LocalUser user) {
 		List<LancamentosResponseDTO> lancamentosByID = service.getLancamentosPorMes(user.getUser().getId(), mes, ano);
 		return new ResponseEntity<>(lancamentosByID, HttpStatus.OK);
 	}
 
-	@GetMapping("/{userID}/renda/{mes}/{ano}")
-	public ResponseEntity<List<LancamentosResponseDTO>> getLancamentoRendaByUserId(@PathVariable(value = "userID") String userID,
-			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano, @CurrentUser LocalUser user) {
-		List<LancamentosResponseDTO> lancamentosByID = service.getLancamentosRendaPorMes(user.getUser().getId(), mes, ano);
+	@GetMapping("/renda/{mes}/{ano}")
+	public ResponseEntity<List<LancamentosResponseDTO>> getLancamentoRendaByUserId(
+			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano,
+			@CurrentUser LocalUser user) {
+		List<LancamentosResponseDTO> lancamentosByID = service.getLancamentosRendaPorMes(user.getUser().getId(), mes,
+				ano);
 		return new ResponseEntity<>(lancamentosByID, HttpStatus.OK);
 	}
 
-	@GetMapping("/{userID}/gasto/{mes}/{ano}")
-	public ResponseEntity<List<LancamentosResponseDTO>> getLancamentoGastoByUserId(@PathVariable(value = "userID") String userID,
-			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano, @CurrentUser LocalUser user) {
-		List<LancamentosResponseDTO> lancamentosByID = service.getLancamentosGastoPorMes(user.getUser().getId(), mes, ano);
+	@GetMapping("/gasto/{mes}/{ano}")
+	public ResponseEntity<List<LancamentosResponseDTO>> getLancamentoGastoByUserId(
+			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano,
+			@CurrentUser LocalUser user) {
+		List<LancamentosResponseDTO> lancamentosByID = service.getLancamentosGastoPorMes(user.getUser().getId(), mes,
+				ano);
 		return new ResponseEntity<>(lancamentosByID, HttpStatus.OK);
 	}
 
-	@GetMapping("/{userID}/resumo/gasto/{mes}/{ano}")
-	public ResponseEntity<List<Resumo>> getLancamentoResumoGastoByUserId(@PathVariable(value = "userID") String userID,
-			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano, @CurrentUser LocalUser user) {
+	@GetMapping("/resumo/gasto/{mes}/{ano}")
+	public ResponseEntity<List<Resumo>> getLancamentoResumoGastoByUserId(
+			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano,
+			@CurrentUser LocalUser user) {
 		List<Resumo> lancamentosByID = service.getLancamentosGastoResumoPorMes(user.getUser().getId(), mes, ano);
 		return new ResponseEntity<>(lancamentosByID, HttpStatus.OK);
 	}
 
-	@GetMapping("/{userID}/resumo/renda/{mes}/{ano}")
-	public ResponseEntity<List<Resumo>> getLancamentoResumoRendaByUserId(@PathVariable(value = "userID") String userID,
-			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano, @CurrentUser LocalUser user) {
+	@GetMapping("/resumo/renda/{mes}/{ano}")
+	public ResponseEntity<List<Resumo>> getLancamentoResumoRendaByUserId(
+			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano,
+			@CurrentUser LocalUser user) {
 		List<Resumo> lancamentosByID = service.getLancamentosRendaResumoPorMes(user.getUser().getId(), mes, ano);
 		return new ResponseEntity<>(lancamentosByID, HttpStatus.OK);
 	}
 
-	@PostMapping("/{userID}")
-	public ResponseEntity<LancamentosResponseDTO> postLancamento(@PathVariable(value = "userID") String userID,
+	@PostMapping("/")
+	public ResponseEntity<LancamentosResponseDTO> postLancamento(@CurrentUser LocalUser user,
 			@RequestBody LancamentoRequestDTO lancamento) {
-		LancamentosResponseDTO novoLancamento = service.saveNovoLancamento(Long.valueOf(userID), lancamento);
+		LancamentosResponseDTO novoLancamento = service.saveNovoLancamento(user.getUser().getId(), lancamento);
 		return new ResponseEntity<>(novoLancamento, HttpStatus.CREATED);
 	}
 
-	@DeleteMapping("/{userID}/{lancamentoID}")
-	public ResponseEntity<Object> deleteLancamento(@PathVariable(value = "userID") String userID,
+	@DeleteMapping("/{lancamentoID}")
+	public ResponseEntity<Object> deleteLancamento(@CurrentUser LocalUser user,
 			@PathVariable(value = "lancamentoID") String lancamentoID) {
-		service.deleteLancamentoByID(Long.valueOf(userID), Long.valueOf(lancamentoID));
+		service.deleteLancamentoByID(user.getUser().getId(), Long.valueOf(lancamentoID));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PatchMapping("/{userID}/{lancamentoID}")
-	public ResponseEntity<LancamentosResponseDTO> patchLancamento(@PathVariable(value = "userID") String userID,
+	@PatchMapping("/{lancamentoID}")
+	public ResponseEntity<LancamentosResponseDTO> patchLancamento(@CurrentUser LocalUser user,
 			@PathVariable(value = "lancamentoID") String lancamentoID, @RequestBody LancamentoRequestDTO lancamento) {
-		LancamentosResponseDTO response = service.updateLancamento(Long.valueOf(userID), lancamento);
+		LancamentosResponseDTO response = service.updateLancamento(user.getUser().getId(), lancamento);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }
