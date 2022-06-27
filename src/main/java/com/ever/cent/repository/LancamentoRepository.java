@@ -8,28 +8,36 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ever.cent.domain.dto.Resumo;
+import com.ever.cent.domain.dto.ResumoGastoOrcamento;
 import com.ever.cent.domain.model.Lancamento;
-
 
 @Repository
 public interface LancamentoRepository extends JpaRepository<Lancamento, Long> {
-	
+
 	List<Lancamento> findByUserId(Long user_id);
 
 	@Query("select l from Lancamento l where l.user.id = :user_id and EXTRACT (year FROM l.dataLancamento) = :year and EXTRACT (month FROM l.dataLancamento) = :month")
-	List<Lancamento> getByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year, @Param("month") int month);
+	List<Lancamento> getByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year,
+			@Param("month") int month);
 
 	@Query("select l from Lancamento l where l.user.id = :user_id and l.tipoLancamento.isRenda = false and EXTRACT (year FROM l.dataLancamento) = :year and EXTRACT (month FROM l.dataLancamento) = :month")
-	List<Lancamento> getGastoByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year, @Param("month") int month);
+	List<Lancamento> getGastoByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year,
+			@Param("month") int month);
 
 	@Query("select l from Lancamento l where l.user.id = :user_id and l.tipoLancamento.isRenda = true and EXTRACT (year FROM l.dataLancamento) = :year and EXTRACT (month FROM l.dataLancamento) = :month")
-	List<Lancamento> getRendaByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year, @Param("month") int month);
+	List<Lancamento> getRendaByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year,
+			@Param("month") int month);
 
 	@Query("select new com.ever.cent.domain.dto.Resumo(l.tipoLancamento.tipo, SUM(l.valor)) from Lancamento l where l.user.id = :user_id and l.tipoLancamento.isRenda = false and EXTRACT (year FROM l.dataLancamento) = :year and EXTRACT (month FROM l.dataLancamento) = :month group by l.tipoLancamento.id, l.tipoLancamento.tipo")
-	List<Resumo> getResumoGastoByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year, @Param("month") int month);
+	List<Resumo> getResumoGastoByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year,
+			@Param("month") int month);
 
 	@Query("select new com.ever.cent.domain.dto.Resumo(l.tipoLancamento.tipo, SUM(l.valor))  from Lancamento l where l.user.id = :user_id and l.tipoLancamento.isRenda = true and EXTRACT (year FROM l.dataLancamento) = :year and EXTRACT (month FROM l.dataLancamento) = :month group by l.tipoLancamento.id, l.tipoLancamento.tipo")
-	List<Resumo> getResumoRendaByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year, @Param("month") int month);
+	List<Resumo> getResumoRendaByUserYearAndMonth(@Param("user_id") Long user_id, @Param("year") int year,
+			@Param("month") int month);
 
+	@Query("select new com.ever.cent.domain.dto.ResumoGastoOrcamento(l.tipoLancamento.tipo, SUM(l.valor), o.valor)  from Lancamento l left join Orcamento o on (l.user.id = o.user.id AND l.tipoLancamento.id = o.tipoLancamento.id) where l.user.id = :user_id and l.tipoLancamento.isRenda = false and EXTRACT (year FROM l.dataLancamento) = :year and EXTRACT (month FROM l.dataLancamento) = :month group by l.tipoLancamento.id, l.tipoLancamento.tipo, o.valor")
+	List<ResumoGastoOrcamento> getGastosVOrcamentoResumoPorMes(@Param("user_id") Long user_id, @Param("year") int year,
+			@Param("month") int month);
 
 }

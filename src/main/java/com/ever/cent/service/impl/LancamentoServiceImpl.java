@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ever.cent.domain.dto.Resumo;
+import com.ever.cent.domain.dto.ResumoGastoOrcamento;
 import com.ever.cent.domain.dto.lacamento.LancamentoRequestDTO;
 import com.ever.cent.domain.dto.lacamento.LancamentosResponseDTO;
 import com.ever.cent.domain.model.Lancamento;
@@ -80,6 +81,11 @@ public class LancamentoServiceImpl implements LancamentoService {
 	@Override
 	public List<Resumo> getLancamentosRendaResumoPorMes(Long userId, Integer mes, Integer ano){
 		return repo.getResumoRendaByUserYearAndMonth(userId, ano, mes);
+	}
+
+	@Override
+	public List<ResumoGastoOrcamento> getGastosVOrcamentoResumoPorMes(Long userId, Integer mes, Integer ano){
+		return repo.getGastosVOrcamentoResumoPorMes(userId, ano, mes);
 	}
 
 	@Override

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ever.cent.config.CurrentUser;
 import com.ever.cent.domain.dto.LocalUser;
 import com.ever.cent.domain.dto.Resumo;
+import com.ever.cent.domain.dto.ResumoGastoOrcamento;
 import com.ever.cent.domain.dto.lacamento.LancamentoRequestDTO;
 import com.ever.cent.domain.dto.lacamento.LancamentosResponseDTO;
 import com.ever.cent.service.impl.LancamentoServiceImpl;
@@ -82,6 +83,14 @@ public class LancamentoController {
 			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano,
 			@CurrentUser LocalUser user) {
 		List<Resumo> lancamentosByID = service.getLancamentosRendaResumoPorMes(user.getUser().getId(), mes, ano);
+		return new ResponseEntity<>(lancamentosByID, HttpStatus.OK);
+	}
+
+	@GetMapping("/resumo/gasto-orcamento/{mes}/{ano}")
+	public ResponseEntity<List<ResumoGastoOrcamento>> getGastosVOrcamentoResumoByUserId(
+			@PathVariable(value = "mes") Integer mes, @PathVariable(value = "ano") Integer ano,
+			@CurrentUser LocalUser user) {
+		List<ResumoGastoOrcamento> lancamentosByID = service.getGastosVOrcamentoResumoPorMes(user.getUser().getId(), mes, ano);
 		return new ResponseEntity<>(lancamentosByID, HttpStatus.OK);
 	}
 
