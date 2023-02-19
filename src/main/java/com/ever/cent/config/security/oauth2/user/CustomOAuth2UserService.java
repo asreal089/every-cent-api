@@ -50,7 +50,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
  
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public void populateEmailAddressFromLinkedIn(OAuth2UserRequest oAuth2UserRequest, Map<String, Object> attributes) throws OAuth2AuthenticationException {
+    public void populateEmailAddressFromLinkedIn(OAuth2UserRequest oAuth2UserRequest, Map<String, Object> attributes) throws OAuth2AuthenticationException{
         String emailEndpointUri = env.getProperty("linkedin.email-address-uri");
         Assert.notNull(emailEndpointUri, "LinkedIn email address end point required");
         RestTemplate restTemplate = new RestTemplate();
@@ -58,8 +58,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + oAuth2UserRequest.getAccessToken().getTokenValue());
         HttpEntity<?> entity = new HttpEntity<>("", headers);
         ResponseEntity<Map> response = restTemplate.exchange(emailEndpointUri, HttpMethod.GET, entity, Map.class);
+                 
         List<?> list = (List<?>) response.getBody().get("elements");
         Map map = (Map<?, ?>) ((Map<?, ?>) list.get(0)).get("handle~");
         attributes.putAll(map);
+        
     }
 }

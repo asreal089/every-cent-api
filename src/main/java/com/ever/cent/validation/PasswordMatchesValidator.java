@@ -1,7 +1,7 @@
 package com.ever.cent.validation;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 import com.ever.cent.domain.dto.SignUpRequest;
  
