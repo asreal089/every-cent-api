@@ -5,7 +5,7 @@ Projeto para o back-end de aplicação voltada para controle de gastos.
 
 O projeto usa:
 <ul>
-    <li>Spring-boot, com java 11</li>
+    <li>Spring-boot 3.0.3, com java 17</li>
     <li>Flyway para migrations</li>
     <li>Foi desenvolvido com Postgresql</li>
     <li>Swagger para documentação dos Endpoint</li>
@@ -25,3 +25,7 @@ mvn spring-boot:run
 ### O que estara disponível na API:
 
 ![swagger](https://github.com/asreal089/every-cent-api/blob/master/src/main/resources/assets/126BB659-3865-45AA-B367-AE23E6A0959D_1_105_c.jpeg?raw=true)
+
+### STACK:
+
+O Frontend da aplicação está disponivel no link: [every-cent-front](https://github.com/asreal089/every-cent-front)
