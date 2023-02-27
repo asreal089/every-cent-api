@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
  
     @Autowired
     private RoleRepository roleRepository;
- 
+    
     @Autowired
     private PasswordEncoder passwordEncoder;
  
@@ -114,4 +114,6 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findUserById(Long id) {
         return userRepository.findById(id);
     }
+
+
 }

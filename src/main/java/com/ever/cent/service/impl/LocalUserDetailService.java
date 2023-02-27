@@ -12,7 +12,7 @@ import com.ever.cent.exception.ResourceNotFoundException;
 import com.ever.cent.service.UserService;
 import com.ever.cent.utils.GeneralUtils;
  
-@Service("localUserDetailService")
+@Service
 public class LocalUserDetailService implements UserDetailsService {
  
     @Autowired

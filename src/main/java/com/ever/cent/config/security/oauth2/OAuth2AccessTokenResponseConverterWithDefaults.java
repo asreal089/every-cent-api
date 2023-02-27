@@ -18,7 +18,7 @@ import org.springframework.util.StringUtils;
 /**
  * @author Joe Grandja
  */
-public class OAuth2AccessTokenResponseConverterWithDefaults implements Converter<Map<String, String>, OAuth2AccessTokenResponse> {
+public class OAuth2AccessTokenResponseConverterWithDefaults implements Converter<Map<String, Object>, OAuth2AccessTokenResponse> {
     private static final Set<String> TOKEN_RESPONSE_PARAMETER_NAMES = Stream
             .of(OAuth2ParameterNames.ACCESS_TOKEN, OAuth2ParameterNames.TOKEN_TYPE, OAuth2ParameterNames.EXPIRES_IN, OAuth2ParameterNames.REFRESH_TOKEN, OAuth2ParameterNames.SCOPE)
             .collect(Collectors.toSet());
@@ -26,33 +26,34 @@ public class OAuth2AccessTokenResponseConverterWithDefaults implements Converter
     private OAuth2AccessToken.TokenType defaultAccessTokenType = OAuth2AccessToken.TokenType.BEARER;
  
     @Override
-    public OAuth2AccessTokenResponse convert(Map<String, String> tokenResponseParameters) {
-        String accessToken = tokenResponseParameters.get(OAuth2ParameterNames.ACCESS_TOKEN);
+    public OAuth2AccessTokenResponse convert(Map<String, Object> tokenResponseParameters) {
+        Object accessToken = tokenResponseParameters.get(OAuth2ParameterNames.ACCESS_TOKEN);
  
         OAuth2AccessToken.TokenType accessTokenType = this.defaultAccessTokenType;
-        if (OAuth2AccessToken.TokenType.BEARER.getValue().equalsIgnoreCase(tokenResponseParameters.get(OAuth2ParameterNames.TOKEN_TYPE))) {
+        if (OAuth2AccessToken.TokenType.BEARER.getValue().equals(tokenResponseParameters.get(OAuth2ParameterNames.TOKEN_TYPE))) {
             accessTokenType = OAuth2AccessToken.TokenType.BEARER;
         }
- 
+        
         long expiresIn = 0;
         if (tokenResponseParameters.containsKey(OAuth2ParameterNames.EXPIRES_IN)) {
             try {
-                expiresIn = Long.valueOf(tokenResponseParameters.get(OAuth2ParameterNames.EXPIRES_IN));
+                expiresIn = Long.valueOf(tokenResponseParameters.get(OAuth2ParameterNames.EXPIRES_IN).toString());
             } catch (NumberFormatException ex) {
             }
         }
  
         Set<String> scopes = Collections.emptySet();
         if (tokenResponseParameters.containsKey(OAuth2ParameterNames.SCOPE)) {
-            String scope = tokenResponseParameters.get(OAuth2ParameterNames.SCOPE);
-            scopes = Arrays.stream(StringUtils.delimitedListToStringArray(scope, " ")).collect(Collectors.toSet());
+            Object scope = tokenResponseParameters.get(OAuth2ParameterNames.SCOPE);
+            scopes = Arrays.stream(StringUtils.delimitedListToStringArray(scope.toString(), " ")).collect(Collectors.toSet());
         }
+        
  
         Map<String, Object> additionalParameters = new LinkedHashMap<>();
         tokenResponseParameters.entrySet().stream().filter(e -> !TOKEN_RESPONSE_PARAMETER_NAMES.contains(e.getKey()))
                 .forEach(e -> additionalParameters.put(e.getKey(), e.getValue()));
  
-        return OAuth2AccessTokenResponse.withToken(accessToken).tokenType(accessTokenType).expiresIn(expiresIn).scopes(scopes).additionalParameters(additionalParameters).build();
+        return OAuth2AccessTokenResponse.withToken(accessToken.toString()).tokenType(accessTokenType).expiresIn(expiresIn).scopes(scopes).additionalParameters(additionalParameters).build();
     }
  
     public final void setDefaultAccessTokenType(OAuth2AccessToken.TokenType defaultAccessTokenType) {

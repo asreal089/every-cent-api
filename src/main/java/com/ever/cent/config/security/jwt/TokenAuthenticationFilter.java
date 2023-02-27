@@ -27,7 +27,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private TokenProvider tokenProvider;
  
     @Autowired
-    private LocalUserDetailService customUserDetailsService;
+    private LocalUserDetailService localUserDetailService;
  
     private static final Logger logger = LoggerFactory.getLogger(TokenAuthenticationFilter.class);
  
@@ -39,7 +39,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 Long userId = tokenProvider.getUserIdFromToken(jwt);
  
-                UserDetails userDetails = customUserDetailsService.loadUserById(userId);
+                UserDetails userDetails = localUserDetailService.loadUserById(userId);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
  
