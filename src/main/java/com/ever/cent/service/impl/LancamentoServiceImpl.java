@@ -11,12 +11,14 @@ import com.ever.cent.domain.dto.lacamento.LancamentosResponseDTO;
 import com.ever.cent.domain.model.Lancamento;
 import com.ever.cent.domain.model.TipoLancamento;
 import com.ever.cent.domain.model.User;
+import com.ever.cent.exception.BadRequestException;
 import com.ever.cent.exception.ForbidenAccessException;
 import com.ever.cent.exception.NotFoundException;
 import com.ever.cent.repository.LancamentoRepository;
 import com.ever.cent.repository.TipoLancamentoRepository;
 import com.ever.cent.repository.UserRepository;
 import com.ever.cent.service.LancamentoService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,8 @@ public class LancamentoServiceImpl implements LancamentoService {
 	private static final String FORBIDEN = "Acesso negado ao lançamento.";
 
 	private static final String NOT_FOUND = "Lancamento não encontrado.";
+
+	private static final String NOT_FOUND_TIPO = "Tipo não encontrado";
 
 	@Autowired
 	private LancamentoRepository repo;
@@ -49,7 +53,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 		if (!lancamento.isPresent()) {
 			throw new NotFoundException(NOT_FOUND);
 		}
-		if(lancamento.get().getUser().getId() !=  userID) {
+		if(!lancamento.get().getUser().getId().equals(userID)) {
 			throw new ForbidenAccessException(FORBIDEN);
 		}
 		return converLancamentoToResponseDTO(lancamento.get());
@@ -90,8 +94,14 @@ public class LancamentoServiceImpl implements LancamentoService {
 
 	@Override
 	public LancamentosResponseDTO saveNovoLancamento(Long userID, LancamentoRequestDTO lancamento) {
-		User user = userRepo.findById(userID).get();
-		TipoLancamento tipo = tipoRepo.findById(lancamento.getTipoID()).get();
+		Optional<User> userOptional =  userRepo.findById(userID);
+		if(userOptional.isEmpty())
+			throw new BadRequestException(FORBIDEN);
+		User user = userOptional.get();
+		Optional<TipoLancamento> tipoLancOptional = tipoRepo.findById(lancamento.getTipoID());
+		if(tipoLancOptional.isEmpty())
+			throw new BadRequestException(NOT_FOUND_TIPO);
+		TipoLancamento tipo = tipoLancOptional.get();
 		Lancamento lancamentoEntidade = Lancamento.builder().user(user).tipoLancamento(tipo)
 				.dataLancamento(lancamento.getData_lacamento()).descricao(lancamento.getDescricao())
 				.valor(lancamento.getValor()).build();
@@ -108,7 +118,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 			throw new NotFoundException(NOT_FOUND);
 		}
 		Lancamento lancamento = entidade.get();
-		if(lancamento.getUser().getId() != userID) {
+		if(! lancamento.getUser().getId().equals(userID)) {
 			throw new ForbidenAccessException(FORBIDEN);
 		}
 		repo.deleteById(lacamentoID);
@@ -124,12 +134,15 @@ public class LancamentoServiceImpl implements LancamentoService {
 			}
 			Lancamento entidade = lancamentoEntitdade.get();
 			
-			if(entidade.getUser().getId() != userID) {
+			if(!entidade.getUser().getId().equals(userID)) {
 				throw new ForbidenAccessException(FORBIDEN);				
 			}
 			entidade.setDataLancamento(lancamento.getData_lacamento());
 			entidade.setDescricao(lancamento.getDescricao());
-			TipoLancamento tipo = tipoRepo.findById(lancamento.getTipoID()).get();
+			Optional<TipoLancamento> tipoLancOptinal = tipoRepo.findById(lancamento.getTipoID());
+			if(tipoLancOptinal.isEmpty())
+				throw new NotFoundException(NOT_FOUND_TIPO);
+			TipoLancamento tipo = tipoLancOptinal.get();
 			entidade.setTipoLancamento(tipo);
 			entidade.setValor(lancamento.getValor());
 			
