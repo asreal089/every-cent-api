@@ -14,6 +14,10 @@ import com.ever.cent.domain.model.Role;
 import com.ever.cent.domain.model.User;
 
 public class GeneralUtils {
+
+    private GeneralUtils() {
+        throw new IllegalStateException("Utility class");
+    }
 	 
     public static List<SimpleGrantedAuthority> buildSimpleGrantedAuthorities(final Set<Role> roles) {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
