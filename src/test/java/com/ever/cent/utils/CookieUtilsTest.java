@@ -17,10 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class CookieUtilsTest {
-
-    //HttpServletRequest request = mock(HttpServletRequest.class);
-    //HttpServletResponse response = mock(HttpServletResponse.class);
-
+    
     @Test
     void testAddCookie() {
         final HttpServletResponse response = mock(HttpServletResponse.class);
