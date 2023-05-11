@@ -37,7 +37,7 @@ public class UserServiceImplTest {
     void testFindUserByEmail() {
         when(userRepository.findByEmail(anyString()))
                 .thenReturn(UserMock.getUser());
-        assert(userRepository.findByEmail("teste@teste.com") != null);
+        assert(userServiceImpl.findUserByEmail("teste@teste.com") != null);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class UserServiceImplTest {
         when(userRepository.findById(anyLong()))
                 .thenReturn(Optional.of(UserMock.getUser()));
 
-        assert(userRepository.findById(1L).isPresent());
+        assert(userServiceImpl.findUserById(1L).isPresent());
     }
 
     @Test
