@@ -81,7 +81,7 @@ public class WebSecurityConfig {
 		.requestMatchers("/v3/api-docs/swagger-config").permitAll()
 		.requestMatchers("/", "/error", "/api/all", "/api/auth/**").permitAll()
 		.requestMatchers("/oauth2/**").permitAll()
-		.requestMatchers("/tipo-lancamento").permitAll()
+		.requestMatchers("/api/tipo-lancamento").permitAll()
 		.anyRequest().authenticated().and().oauth2Login().authorizationEndpoint()
 		.authorizationRequestRepository(cookieAuthorizationRequestRepository()).and().redirectionEndpoint()
 		.and().userInfoEndpoint().oidcUserService(customOidcUserService).userService(customOAuth2UserService)
